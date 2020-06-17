@@ -9,7 +9,6 @@ export default class Login extends Component {
             suppliers: this.context.suppliers.supplier_data
         }
     }
-    // validation code here
 
     // create table with data
     createSupplierTables() {
