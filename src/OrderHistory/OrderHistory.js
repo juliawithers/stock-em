@@ -1,27 +1,34 @@
-import React from 'react';
-import context from './context';
+import React, { Component }  from 'react';
+import context from '../context';
 
 export default class OrderHistory extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
         this.state = {
-            suppliers: this.context.suppliers.supplier_data
+            past_orders: []
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            past_orders: this.context.past_orders.order_history
+        })
     }
     // validation code here
 
     // create table with data
     createSupplierTables() {
-        return this.state.suppliers.map((lineItem, i) => {
-            const { company, contact, phone, email, address } = lineItem;
+        return this.state.past_orders.map((lineItem, i) => {
+            const { company, sku, quantity, description, order, date_entered } = lineItem;
             return (
-                <tr>
+                <tr key={i}>
                     <td>{company}</td>
-                    <td>{contact}</td>
-                    <td>{phone}</td>
-                    <td>{email}</td>
-                    <td>{address}</td>
+                    <td>{sku}</td>
+                    <td>{quantity}</td>
+                    <td>{description}</td>
+                    <td>{order}</td>
+                    <td>{date_entered}</td>
                 </tr>
             )
         })
@@ -30,18 +37,21 @@ export default class OrderHistory extends Component {
     render() {
         return (
             <div>
-                <h1>Current Suppliers Page</h1>
+                <h1>Past Orders History</h1>
                 <p> table of current inventory </p>
-                <div class="table">
-                    <table class="scrolling-wrapper">
-                        <tr>
+                <div className="table">
+                    <table className="scrolling-wrapper">
+                        <tbody>
+                            <tr>
                             <th>Company</th>
-                            <th>Supplier Contact Name</th>
-                            <th>Supplier Contact Number</th>
-                            <th>Supplier Contact Email</th>
-                            <th>Supplier Contact Address</th>
-                        </tr>
-                        {this.createSupplierTables()}
+                            <th>SKU</th>
+                            <th>Quantity</th>
+                            <th>Description</th>
+                            <th>PO</th>
+                            <th>Date Entered</th>
+                            </tr>
+                            {this.createSupplierTables()}    
+                        </tbody>
                     </table>
                 </div>
             </div>

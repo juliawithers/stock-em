@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import STORE from './STORE';
-import CurrentInventory from './CurrentInventory/CurrentInventory';
-import CurrentSuppliers from './CurrentSuppliers/CurrentSuppliers';
-import CurrentCustomers from './CurrentCustomers/CurrentCustomers';
-import OrderHistory from './OrderHistory/OrderHistory';
-import CustomerOrder from './CustomerOrder/CustomerOrder';
-import SupplierOrder from './SupplierOrder/SupplierOrder';
-import AddCustomer from './AddCustomer/AddCustomer';
-import AddSKU from './AddSKU/AddSKU';
-import AddSupplier from './AddSupplier/AddSupplier';
+import STORE from '../STORE';
+import CurrentInventory from '../CurrentInventory/CurrentInventory';
+import CurrentSuppliers from '../CurrentSuppliers/CurrentSuppliers';
+import CurrentCustomers from '../CurrentCustomers/CurrentCustomers';
+import OrderHistory from '../OrderHistory/OrderHistory';
+import CustomerOrder from '../CustomerOrder/CustomerOrder';
+import SupplierOrder from '../SupplierOrder/SupplierOrder';
+import AddCustomer from '../AddCustomer/AddCustomer';
+import AddSKU from '../AddSKU/AddSKU';
+import AddSupplier from '../AddSupplier/AddSupplier';
 import { Route, Link, withRouter, NavLink } from 'react-router-dom';
-import './App.css';
-import context from './context'
-import config from './config'
+import context from '../context'
+import config from '../config'
 
 export default class HandleApp extends Component {
 
@@ -30,7 +29,7 @@ export default class HandleApp extends Component {
     // Nav routes and almost all other routes need to be here
     submitCustomerPO=(object)=>{
         // submit customer PO to API
-        
+
     }
 
     createNavRoutes() {

@@ -1,13 +1,19 @@
-import React from 'react';
-import context from './context';
+import React, { Component } from 'react';
+import context from '../context';
 
-export default class Login extends Component {
+export default class CurrentInventory extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
         this.state = {
-            inventory: this.context.inventory.skus
+            inventory: []
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            inventory: this.context.inventory.skus
+        })
     }
     // validation code here
 
@@ -16,7 +22,7 @@ export default class Login extends Component {
         return this.state.inventory.map((lineItem, i) => {
             const { sku, quantity, description, location } = lineItem;
             return (
-                <tr>
+                <tr key={i}>
                     <td>{sku}</td>
                     <td>{quantity}</td>
                     <td>{description}</td>
@@ -27,19 +33,23 @@ export default class Login extends Component {
     }
 
     render() {
+        console.log(this.context)
         return (
             <div>
                 <h1>Current Inventory Page</h1>
                 <p> table of current inventory </p>
-                <div class="table">
-                    <table class="scrolling-wrapper">
-                        <tr>
-                            <th>SKU</th>
-                            <th>Quantity</th>
-                            <th>Description</th>
-                            <th>Location</th>
-                        </tr>
-                        {this.createInventoryTables()}
+                <div className="table">        
+                    <table className="scrolling-wrapper">
+                        <tbody>
+                            <tr>
+                                <th>SKU</th>
+                                <th>Quantity</th>
+                                <th>Description</th>
+                                <th>Location</th>
+                            </tr>
+                            {this.createInventoryTables()}    
+                        </tbody>
+                       
                     </table>
                 </div>
             </div>

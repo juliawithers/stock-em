@@ -1,7 +1,7 @@
-import React from 'react';
-import STORE from './STORE';
+import React, { Component }  from 'react';
+import context from '../context';
 
-export default class Login extends Component {
+export default class CreateAccount extends Component {
 
     // validation code here
 
