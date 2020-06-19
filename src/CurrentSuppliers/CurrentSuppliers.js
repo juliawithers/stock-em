@@ -12,7 +12,7 @@ export default class CustomerSuppliers extends Component {
 
     componentDidMount(){
         this.setState({
-            suppliers: this.context.suppliers.suppliers_data
+            suppliers: this.context.suppliers
         })
     }
 

@@ -20,24 +20,160 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inventory: STORE.inventories[0],
-      customers: STORE.customers[0],
-      suppliers: STORE.suppliers[0],
-      past_orders: STORE.past_orders[0],
-      click: false
+      inventory: [],
+      customers: [],
+      suppliers: [],
+      past_orders: [],
+      skus: [],
+      click: false,
+      user_id: '',
+      submitCustomerPO: ()=>{},
+      submitSupplierPO: ()=>{}
     }
   }
-  // validation code here
-  // Nav routes and almost all other routes need to be here
-  submitCustomerPO = (object) => {
-    // submit customer PO to API
 
+  componentDidMount(){
+    this.setState({
+      inventory: STORE.inventories[0].skus,
+      customers: STORE.customers[0].customers_data,
+      suppliers: STORE.suppliers[0].suppliers_data,
+      past_orders: STORE.past_orders[0].order_history,
+      skus: STORE.skus[0].skus,
+      user_id: STORE.users[0].id,
+    })
+  }
+  // validation code here
+
+  submitCustomerPO = (object) => {
+    // handle the change in inventory
+    // submit customer PO to API
+    this.updateInventory(object, 'customerPO')
+  }
+
+  submitSupplierPO = (object) => {
+    // handle the change in inventory
+    // submit customer PO to API
+    this.updateInventory(object, 'supplierPO')
+  }
+
+  updateInventory=(object, reason)=>{
+    // need to delete items from inventory
+    // need to find the oldest item in the database and check the quantitiy.
+    let sku = object.sku;
+    // DELETE INVENTORY FROM PO
+    if (reason === 'customerPO') {
+      let idc = this.findMaxId(this.state.past_orders);
+      let id = idc + 1;
+      let customerObj = {
+        id: id,
+        company: object.company,
+        sku: object.sku,
+        quantity: object.quantity,
+        description: object.description,
+        order: object.order,
+        date_entered: object.date_entered
+      }
+      // we filter the inventory to the selected sku. 
+      let filteredInventory = this.state.inventory.filter(item => item.sku.toString() === sku);
+      // maybe put it in a queue
+      const sortedInventory = filteredInventory.slice().sort((itemA, itemB) => new Date(itemA.date_added) - new Date(itemB.date_added));
+
+      
+      this.findOldestInventory(object,sortedInventory);     
+
+      // submit the customerPO object to the past orders history
+      this.state.past_orders.push(customerObj);
+      this.setState({
+        past_orders: this.state.past_orders,
+      })
+    }
+    else if (reason === 'supplierPO') {
+      // send to database for updating inventory.  
+      let ids = this.findMaxId(this.state.inventory);
+      let id = ids + 1;
+      let supplierObj = {
+        id: id,
+        company: object.company,
+        quantity: object.quantity,
+        sku: object.sku,
+        description: object.description,
+        date_added: object.date_added
+      }
+     
+      this.state.inventory.push(supplierObj)
+      this.setState({
+        inventory: this.state.inventory,
+      })
+    }
+  }
+
+  findMaxId=(array)=>{
+    let max = 0;
+    array.forEach(item => {
+      if (item.id > max) {
+        max = item.id
+      }
+    });
+    return max
+  }
+
+  findOldestInventory=(object, sortedInventory)=>{
+    let quantity = 0;
+    let invArr = this.state.inventory;
+    for (let i=0; i<sortedInventory.length; i++) {
+      let qty = sortedInventory[i].quantity
+      if (qty > object.quantity) {
+        quantity+=qty;
+        // at this point send the id and qty to the update function for inventory. (to the database)
+        let id = sortedInventory[i].id;
+        let diff = quantity-object.quantity;
+
+        let newInv = this.adjustQuantity(invArr, id, diff)
+        this.setState({
+          inventory: newInv
+        })
+        return 
+      }
+      else if (qty <= object.quantity) {
+        quantity+= qty;
+        // at this point send the id to delete to the delete function. (to the database)
+        let workingArr = invArr;
+        invArr = this.deleteInventory(workingArr, sortedInventory[i].id);
+      }      
+    }
+  }
+
+  adjustQuantity=(inventory,id, diff)=>{
+    let item = inventory.find(item => item.id === id);
+
+    let newItem = {
+      id: item.id,
+      sku: item.sku,
+      quantity: diff,
+      description: item.description,
+      location: item.location,
+      date_added: item.date_added
+    }
+
+    let newInventoryList = 
+    inventory.filter(function(el){
+      return el.id != id;
+    });
+
+    newInventoryList.push(newItem)
+    return newInventoryList
+  }
+
+  deleteInventory=(inventory,id)=> {
+    return inventory.filter(function(el){
+      return el.id != id;
+    })
   }
 
   createNavRoutes() {
     if (this.state.click === true) {
       return (
-        <div>
+        <div className="navigation">
           <NavLink
             className="nav-link"
             to="/inventory">Inventory</NavLink>
@@ -137,29 +273,44 @@ export default class App extends Component {
       click:true
     })
   }
+  
+  createLanding(){
+    if (this.state.click === false){
+      return (
+        <div>
+          <h1>Landing Page</h1>
+            <section>
+              <p>This app is intendend to help users track their inventory, place orders for customers, and place orders to
+                suppliers to inflate inventory when it is low</p>
+              <p>Please use the link below to enter the inventory site for SomeCompany Inc.</p>
+            </section>
+        </div>
+      )
+    } else {
+      return <div></div>
+    }
+  }
 
   render() {
     const contextValue = {
       inventory: this.state.inventory,
       customers: this.state.customers,
       suppliers: this.state.suppliers,
-      past_orders: this.state.past_orders
+      past_orders: this.state.past_orders,
+      skus: this.state.skus,
+      submitCustomerPO: this.submitCustomerPO,
+      submitSupplierPO: this.submitSupplierPO,
+      user_id: this.state.user_id
     };
     console.log(contextValue)
     return (
       <context.Provider value={contextValue}>
         <div>
-          <h1>Current Inventory Page</h1>
           <nav role="navigation">
             {this.createNavRoutes()}
           </nav>
           <main>
-            <h1>Landing Page</h1>
-            <section>
-              <p>This app is intendend to help users track their inventory, place orders for customers, and place orders to
-                suppliers to inflate inventory when it is low</p>
-              <p>Please use the link below to enter the inventory site for SomeCompany Inc.</p>
-            </section>
+            {this.createLanding()}
             <button className="enter-button" onClick={this.handleClick}><Link to='/inventory'>Enter</Link></button>
             {this.createMainRoutes()}
           </main>

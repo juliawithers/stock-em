@@ -12,7 +12,7 @@ export default class CurrentInventory extends Component {
 
     componentDidMount(){
         this.setState({
-            inventory: this.context.inventory.skus
+            inventory: this.context.inventory
         })
     }
     // validation code here
@@ -33,7 +33,6 @@ export default class CurrentInventory extends Component {
     }
 
     render() {
-        console.log(this.context)
         return (
             <div>
                 <h1>Current Inventory Page</h1>

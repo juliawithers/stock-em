@@ -12,14 +12,14 @@ export default class AddSKU extends Component {
 
     componentDidMount(){
         this.setState({
-            inventory: this.context.inventory.skus
+            inventory: this.context.inventory
         })
     }
     // validation code here
 
     // create table with data
 
-    render() {
+    render() { 
         return (
             <div>
                 <h1>Add an SKU to the database</h1>

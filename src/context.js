@@ -12,7 +12,12 @@ const context = React.createContext({
   customers: [],
   suppliers: [],
   past_orders: [],
+  skus: [],
+  customerId: '',
+  supplierId: '',
+  user_id: '',
   submitCustomerPO: ()=>{},
+  submitSupplierPO: ()=>{},
 })
 
 export default context

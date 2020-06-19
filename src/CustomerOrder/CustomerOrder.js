@@ -8,6 +8,7 @@ export default class CustomerOrder extends Component {
         this.state = {
             customers: [],
             inventory: [],
+            skus: [],
             sku: '',
             customer: '',
             qty: '',
@@ -18,8 +19,9 @@ export default class CustomerOrder extends Component {
 
     componentDidMount(){
         this.setState({
-            customers: this.context.customers.customers_data,
-            inventory: this.context.inventory.skus,
+            customers: this.context.customers,
+            inventory: this.context.inventory,
+            skus: this.context.skus
         })
     }
     // validation code here
@@ -37,7 +39,7 @@ export default class CustomerOrder extends Component {
     }
 
     createSKUOptions=()=> {
-        let options = this.state.inventory;
+        let options = this.state.skus;
         return options.map((item, i) => {
             return (
             <option
@@ -63,28 +65,23 @@ export default class CustomerOrder extends Component {
         return `<p></p>`;
     }
 
-    submitCustomerPO = e => {
+    handleSubmitCustomerPO = e => {
         e.preventDefault();
-
-        this.state.inventory.find(item => {
-            if (item.sku === this.state.sku) {
-                this.setState({
-                    description: item.description
-                })
-            }
-        })
+        const item = this.state.skus.find(item => item.sku.toString() == this.state.sku)
+        const description = item.description;
 
         this.verifySKUQuantity(this.state.inventory, this.state.qty, this.state.sku);
         let today = new Date();
-        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        // let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    
         const customerPOobj = {
             user_id: this.context.user_id,
             company: this.state.customer,
             sku: this.state.sku,
             quantity: this.state.qty,
-            description: this.state.description,
+            description: description,
             order: this.state.order,
-            date_entered: date
+            date_entered: today
         }
         this.context.submitCustomerPO(customerPOobj)
     }
@@ -128,8 +125,6 @@ export default class CustomerOrder extends Component {
         const customerOptions = this.createCustomerOptions();
         const skuOptions = this.createSKUOptions();
 
-        console.log(customerOptions)
-        console.log(skuOptions)
         return (
             <div>
                 <h1>Enter Customer PO's</h1>
@@ -139,7 +134,7 @@ export default class CustomerOrder extends Component {
                     <p>*SELECTED SKU INVENTORY*</p>
                 </section>
                 <section className="form">
-                    <form onSubmit={this.submitCustomerPO}>
+                    <form onSubmit={this.handleSubmitCustomerPO}>
                         <table>
                             <tbody>
                                 <tr>
@@ -148,6 +143,7 @@ export default class CustomerOrder extends Component {
                                     </td>
                                     <td>
                                         <select name="customer-options" id="customer-options" onChange={this.updateSelections} value={this.state.customer}>
+                                            <option defaultValue="Choose One">Choose One</option>
                                             {customerOptions}
                                         </select>
                                     </td>
@@ -158,6 +154,7 @@ export default class CustomerOrder extends Component {
                                     </td>
                                     <td>
                                         <select name="sku" id="sku" onChange={this.updateSelections} value={this.state.sku}>
+                                            <option defaultValue="Choose One">Choose One</option>
                                             {skuOptions}
                                         </select>
                                     </td>

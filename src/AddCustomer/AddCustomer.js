@@ -12,7 +12,7 @@ export default class AddSupplier extends Component {
 
     componentDidMount() {
         this.setState({
-            customers: this.context.customers.sustomer_data
+            customers: this.context.customers
         })
     }
     // validation code here

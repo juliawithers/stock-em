@@ -12,7 +12,7 @@ export default class OrderHistory extends Component {
 
     componentDidMount(){
         this.setState({
-            past_orders: this.context.past_orders.order_history
+            past_orders: this.context.past_orders
         })
     }
     // validation code here

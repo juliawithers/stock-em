@@ -13,6 +13,11 @@
   position: relative;
 }
 
+.navigation{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 
 table {
   font-family: arial, sans-serif;

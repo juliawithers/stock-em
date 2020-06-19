@@ -11,19 +11,23 @@ export default class AddSupplier extends Component {
     }
     componentDidMount(){
         this.setState({
-            suppliers: this.context.suppliers.suppliers_data
+            suppliers: this.context.suppliers
         })
     }
     // validation code here
 
-    // create table with data
+    handleSubmitSupplier=(e)=>{
+        e.preventDefault();
+        
+    }
+
 
     render() {
         return (
             <div>
                 <h1>Add a supplier to the database</h1>
                 <p>validate submissions here </p>
-                <section class="form">
+                <section className="form">
                     <form>
                         <table>
                             <tbody>

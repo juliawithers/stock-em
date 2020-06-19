@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import context from '../context';
 
-export default class CustomerOrder extends Component {
+export default class SupplierOrder extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
         this.state = {
             suppliers: [],
             inventory: [],
+            skus: [],
             sku: '',
             supplier: '',
             qty: '',
@@ -18,8 +19,9 @@ export default class CustomerOrder extends Component {
 
     componentDidMount(){
         this.setState({
-            suppliers: this.context.suppliers.suppliers_data,
-            inventory: this.context.inventory.skus,
+            suppliers: this.context.suppliers,
+            inventory: this.context.inventory,
+            skus: this.context.skus
         })
     }
     // validation code here
@@ -37,7 +39,7 @@ export default class CustomerOrder extends Component {
     }
 
     createSKUOptions() {
-        let options = this.state.inventory;
+        let options = this.state.skus;
         return options.map((item, i) => {
             return (
             <option
@@ -63,38 +65,33 @@ export default class CustomerOrder extends Component {
         return `<p></p>`;
     }
 
-    submitCustomerPO = e => {
+    handleSubmitSupplierPO = e => {
         e.preventDefault();
-
-        this.state.inventory.find(item => {
-            if (item.sku == this.state.sku) {
-                this.setState({
-                    description: item.description
-                })
-            }
-        })
+        const item = this.state.skus.find(item => item.sku.toString() == this.state.sku)
+        const description = item.description;
 
         this.verifySKUQuantity(this.state.inventory, this.state.qty, this.state.sku);
-        let today = new Date();
-        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        const customerPOobj = {
+        // let today = new Date();
+        // let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+        const supplierPOobj = {
             user_id: this.context.user_id,
-            company: this.state.customer,
+            company: this.state.supplier,
             sku: this.state.sku,
             quantity: this.state.qty,
-            description: this.state.description,
+            description: description,
             order: this.state.order,
-            date_entered: date
+            date_added: new Date()
         }
-        this.context.submitCustomerPO(customerPOobj)
+        this.context.submitSupplierPO(supplierPOobj)
     }
 
     updateSelections = (e) => {
         const value = e.target.value;
         const id = e.target.id;
-        if (id === 'customer-options') {
+        if (id === 'supplier-options') {
             this.setState({
-                customer: value
+                supplier: value
             });
         }
         if (id === 'sku') {
@@ -128,17 +125,12 @@ export default class CustomerOrder extends Component {
         const suppliersOptions = this.createSupplierOptions();
         const skuOptions = this.createSKUOptions();
 
-        console.log(suppliersOptions)
-        console.log(skuOptions)
         return (
             <div>
                 <h1>Enter Supplier PO's</h1>
-                <p>There will need to be inventory validation here - if the qty entered for that SKU overpulls, then the form
-                        should not be submitted. Maybe populate current inventory of that product when the SKU is selected? </p>
-                <p>*SELECTED SKU INVENTORY*</p>
                 <p>This is a representative form for submitting supplier PO's and receiving in inventory.</p>
                 <section className="form">
-                    <form>
+                    <form onSubmit={this.handleSubmitSupplierPO}>
                         <table>
                             <tbody>
                                 <tr>
@@ -147,6 +139,7 @@ export default class CustomerOrder extends Component {
                                     </td>
                                     <td>
                                         <select name="supplier-options" id="supplier-options" onChange={this.updateSelections} value={this.state.supplier}>
+                                            <option defaultValue="Choose One">Choose One</option>
                                             {suppliersOptions}
                                         </select>
                                     </td>
@@ -157,6 +150,7 @@ export default class CustomerOrder extends Component {
                                     </td>
                                     <td>
                                         <select name="sku" id="sku" onChange={this.updateSelections} value={this.state.sku}>
+                                            <option defaultValue="Choose One">Choose One</option>
                                             {skuOptions}
                                         </select>
                                     </td>
@@ -166,7 +160,8 @@ export default class CustomerOrder extends Component {
                                         <label htmlFor="quantity">Quantity: </label>
                                     </td>
                                     <td>
-                                        <input name="quantity" type="number" value={this.state.qty} onChange={this.updateSelections}/>
+                                        <input name="quantity" type="number" value={this.state.qty} 
+                                        id="quantity" onChange={this.updateSelections}/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -174,7 +169,7 @@ export default class CustomerOrder extends Component {
                                         <label htmlFor="purchase-order">Purchase Order: </label>
                                     </td>
                                     <td>
-                                        <input name="purchase-order" value={this.state.order} onChange={this.updateSelections}/>
+                                        <input name="purchase-order" id="purchase-order" value={this.state.order} onChange={this.updateSelections}/>
                                     </td>
                                 </tr>
                             </tbody>
