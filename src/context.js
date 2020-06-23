@@ -14,7 +14,9 @@ const context = React.createContext({
   submitSupplierPO: ()=>{},
   submitSupplier: ()=>{},
   submitCustomer: ()=>{},
-  submitSKUs: ()=>{}
+  submitSKUs: ()=>{},
+  submitSupplierUpdate: ()=>{},
+  submitCustomerUpdate: ()=>{},
 })
 
 export default context

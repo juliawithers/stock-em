@@ -13,7 +13,10 @@ export default class SupplierOrder extends Component {
             supplier: '',
             qty: '',
             order: '',
-            description: ''
+            description: '',
+            message: '',
+            sku_message: '',
+            selected: ''
         }
     }
 
@@ -27,7 +30,7 @@ export default class SupplierOrder extends Component {
     // validation code here
 
     createSupplierOptions() {
-        let options = this.state.suppliers;
+        let options = this.context.suppliers;
         return options.map((item, i) => {
             return (
             <option
@@ -39,7 +42,7 @@ export default class SupplierOrder extends Component {
     }
 
     createSKUOptions() {
-        let options = this.state.skus;
+        let options = this.context.skus;
         return options.map((item, i) => {
             return (
             <option
@@ -50,40 +53,45 @@ export default class SupplierOrder extends Component {
         });
     }
 
-    verifySKUQuantity(options, qty, sku) {
-        let sum = 0;
-        options.map((item, i) => {
-            if (item.sku === sku) {
-                sum += item.quantity;
-            }
-            return `SKU is not in the database`
-        })
 
-        if (qty > sum) {
-            return `<p>SKU ${sku} quantity: ${qty}, you cannot overdraft from inventory</p>`
+
+    checkRequired=()=>{
+
+        if (!this.state.supplier || !this.state.sku || !this.state.qty){
+            this.setState({
+                message: 'Please fill out Supplier, SKU, and Quantity fields.'
+            })
+            return false;
         }
-        return `<p></p>`;
+        return true;
     }
 
     handleSubmitSupplierPO = e => {
         e.preventDefault();
-        const item = this.state.skus.find(item => item.sku.toString() === this.state.sku);
-        const description = item.description;
+        const required = this.checkRequired();
 
-        this.verifySKUQuantity(this.state.inventory, this.state.qty, this.state.sku);
-        let today = new Date();
-        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        if (required === true) {
+            const item = this.context.skus.find(item => item.sku === this.state.sku);
+            const description = item.description;
 
-        const supplierPOobj = {
-            user_id: this.context.user_id,
-            company: this.state.supplier,
-            sku: Number(this.state.sku),
-            quantity: Number(this.state.qty),
-            description: description,
-            order: this.state.order,
-            date_added: date
-        };
-        this.context.submitSupplierPO(supplierPOobj);
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+            const supplierPOobj = {
+                id: this.state.selected.id,
+                user_id: this.context.user_id,
+                company: this.state.supplier,
+                sku: Number(this.state.sku),
+                quantity: Number(this.state.qty),
+                description: description,
+                order: this.state.order,
+                date_added: date
+            };
+            this.context.submitSupplierPO(supplierPOobj);    
+            this.setState({
+                message: 'Submission successful.'
+            })
+        }         
 
         this.setState({
             suppliers: this.context.suppliers,
@@ -101,14 +109,17 @@ export default class SupplierOrder extends Component {
         const value = e.target.value;
         const id = e.target.id;
         if (id === 'supplier-options') {
+            let selected = this.context.suppliers.find(item => value === item.company);
             this.setState({
-                supplier: value
+                supplier: value,
+                id: selected.id
             });
         }
         if (id === 'sku') {
             this.setState({
-                sku: value
+                sku: Number(value)
             });
+            this.showSelectedSKU(value)
         }
         if (id === 'quantity') {
             if (value === '') {
@@ -132,6 +143,19 @@ export default class SupplierOrder extends Component {
         });
     }
 
+    showSelectedSKU(value){
+        let selectedSku = this.context.inventory.filter(item => item.sku === Number(value))
+       
+        let sum=0;
+        selectedSku.forEach(item =>{
+            sum += item.quantity;
+        })
+
+        this.setState({
+            sku_message: `SKU: ${value}, Quantity: ${sum}`
+        })
+    }
+
     render() {
         const suppliersOptions = this.createSupplierOptions();
         const skuOptions = this.createSKUOptions();
@@ -140,6 +164,8 @@ export default class SupplierOrder extends Component {
             <div>
                 <h1>Enter Supplier PO's</h1>
                 <p>This is a representative form for submitting supplier PO's and receiving in inventory.</p>
+                <p>{this.state.sku_message}</p>
+                <p>{this.state.message}</p>
                 <section className="form">
                     <form onSubmit={this.handleSubmitSupplierPO}>
                         <table>

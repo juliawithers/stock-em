@@ -14,12 +14,8 @@ export default class CurrentCustomers extends Component {
             customers: this.context.customers
         })
     }
-    // validation code here
-
-    // create table with data
+    
     createSupplierTables() {
-        console.log(this.context.customers)
-        console.log(this.state.customers)
         return this.state.customers.map((lineItem, i) => {
             const { company, contact, phone, email, bill_address, ship_address } = lineItem;
             return (

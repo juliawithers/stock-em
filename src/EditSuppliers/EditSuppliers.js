@@ -1,32 +1,44 @@
 import React, { Component } from 'react';
 import context from '../context';
-import EditSuppliers from '../EditSuppliers/EditSuppliers';
 
-export default class AddSupplier extends Component {
+export default class EditSuppliers extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
         this.state = {
             suppliers: [],
+            inventory: [],
+            skus: [],
             supplier: '',
             supplier_name: '',
             supplier_email: '',
             supplier_number: '',
-            supplier_address: '',
+            supplier_bill_address: '',
+            supplier_ship_address: '',
+            id: '',
+            message: ''
         }
+    }
+
+    componentDidMount(){
+        this.setState({
+            suppliers: this.context.suppliers,
+            inventory: this.context.inventory,
+            skus: this.context.skus
+        })
     }
     // validation code here
 
-    checkUnique=()=>{
-        let skuCheck = 'unique';
-        this.context.suppliers.map(item => {
-            if (this.state.supplier === item.company) {
-                skuCheck = 'not unique';
-                return skuCheck;
-            } 
-            return skuCheck;
-        })
-        return skuCheck;
+    createsupplierOptions=()=> {
+        let options = this.context.suppliers;
+        return options.map((item, i) => {
+            return (
+            <option
+            key={i}
+            value={item.company}>
+                {item.company}
+            </option>)
+        });
     }
 
     checkRequired=()=>{
@@ -40,37 +52,42 @@ export default class AddSupplier extends Component {
         return true;
     }
 
-    handleSubmitSupplier=(e)=>{
+    handleSubmitsupplierUpdate = e => {
         e.preventDefault();
 
-        const check = this.checkUnique();
         const required = this.checkRequired();
-        if (check === 'unique' && required === true) {
-            const supplierObj = {
+        if (required === true) {
+
+            const supplierUpdateObj = {
+                user_id: this.context.user_id,
+                id: this.state.id,
                 company: this.state.supplier,
                 contact: this.state.supplier_name,
-                phone: this.state.supplier_number,
                 email: this.state.supplier_email,
+                phone: this.state.supplier_number,
                 address: this.state.supplier_address
-            };
-            this.context.submitSupplier(supplierObj); 
+            }
+            this.context.submitSupplierUpdate(supplierUpdateObj);    
             this.setState({
-                message: 'Submission successful'
-            }) 
-        } else if (check === 'not unique' && required === false) {
-          
+                message: 'Submission completed'
+            })
+        } else if (required === false) {
             this.setState({
-                message: 'This supplier already exists in the database. Try updating the supplier data in the form below.'
-            }); 
-        } 
+                message: 'Please adjust your quantities as this is overdrafting from inventory'
+            })
+        }
+
         this.setState({
             suppliers: this.context.suppliers,
+            inventory: this.context.inventory,
+            skus: this.context.skus,
+            id: '',
             supplier: '',
             supplier_name: '',
             supplier_email: '',
             supplier_number: '',
-            supplier_address: '',
-        });
+            supplier_address: ''
+        })
     }
 
     updateInputs=(e)=>{
@@ -83,7 +100,7 @@ export default class AddSupplier extends Component {
         }
         if (id === 'supplier-contact-name') {
             this.setState({
-                supplier_name: value
+               supplier_name: value
             });
         }
         if (id === 'supplier-contact-number') {
@@ -106,23 +123,45 @@ export default class AddSupplier extends Component {
         });
     }
 
+    updateSelections=(e)=>{
+        e.preventDefault();
+        const value = e.target.value;
+        const id = e.target.id;
+
+        let selected = this.context.suppliers.find(item => value === item.company)
+
+        this.setState({
+            id: Number(selected.id),
+            supplier: value,
+            supplier_name: selected.contact,
+            supplier_email: selected.email,
+            supplier_number: selected.phone,
+            supplier_address: selected.address,
+        })
+    }
 
     render() {
+        const supplierOptions = this.createsupplierOptions();
+
         return (
             <div>
-                <h1>Add a supplier to the database</h1>
-                <p>validate submissions here </p>
-                <p>{this.state.message}</p>
+                <h1>Edit Supplier Information</h1>
+                <section>
+                    <p>{this.state.message}</p>
+                </section>
                 <section className="form">
-                    <form onSubmit={this.handleSubmitSupplier}>
+                    <form onSubmit={this.handleSubmitsupplierUpdate} id="supplier-PO-form">
                         <table>
                             <tbody>
                                 <tr>
                                     <td>
-                                        <label htmlFor="supplier">Supplier name: </label>
+                                        <label htmlFor="supplier-options">Supplier: </label>
                                     </td>
                                     <td>
-                                        <input name="supplier" value={this.state.supplier} id="supplier" onChange={this.updateInputs}/>
+                                        <select name="supplier-options" id="supplier-options" onChange={this.updateSelections} value={this.state.supplier}>
+                                            <option defaultValue="Choose One">Choose One</option>
+                                            {supplierOptions}
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,7 +169,7 @@ export default class AddSupplier extends Component {
                                         <label htmlFor="supplier-contact-name">Supplier contact name: </label>
                                     </td>
                                     <td>
-                                        <input name="supplier-contact-name" value={this.state.supplier_name} id="supplier-contact-name" onChange={this.updateInputs}/>
+                                        <input name="supplier-contact-name" defaultValue={this.state.supplier_name} id="supplier-contact-name" onChange={this.updateInputs}/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -138,7 +177,7 @@ export default class AddSupplier extends Component {
                                         <label htmlFor="supplier-contact-number">Supplier contact number: </label>
                                     </td>
                                     <td>
-                                        <input name="supplier-contact-number" value={this.state.supplier_number} id="supplier-contact-number" onChange={this.updateInputs} />
+                                        <input name="supplier-contact-number" defaultValue={this.state.supplier_number} id="supplier-contact-number" onChange={this.updateInputs} />
                                     </td>
                                 </tr>
                                 <tr>
@@ -146,24 +185,21 @@ export default class AddSupplier extends Component {
                                         <label htmlFor="supplier-contact-email">Supplier contact email: </label>
                                     </td>
                                     <td>
-                                        <input name="supplier-contact-email" value={this.state.supplier_email} id="supplier-contact-email" onChange={this.updateInputs} />
+                                        <input name="supplier-contact-email" defaultValue={this.state.supplier_email} id="supplier-contact-email" onChange={this.updateInputs}/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label htmlFor="supplier-contact-address">Supplier contact address: </label>
+                                        <label htmlFor="supplier-contact-bill-address">Supplier address: </label>
                                     </td>
                                     <td>
-                                        <input name="supplier-contact-address" value={this.state.supplier_address} id="supplier-contact-address" onChange={this.updateInputs} />
+                                        <input name="supplier-contact-bill-address" defaultValue={this.state.supplier_address} id="supplier-contact-address" onChange={this.updateInputs}/>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                        <button>Submit</button>
+                        <button>Update Supplier</button>
                     </form>
-                </section>
-                <section>
-                    <EditSuppliers/>
                 </section>
             </div>
         )

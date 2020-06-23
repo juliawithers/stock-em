@@ -31,7 +31,9 @@ export default class App extends Component {
       submitSupplierPO: ()=>{},
       submitSupplier: ()=>{},
       submitCustomer: ()=>{},
-      submitSKUs: ()=>{}
+      submitSKUs: ()=>{},
+      submitSupplierUpdate: ()=>{},
+      submitCustomerUpdate: ()=>{},
     }
   }
 
@@ -78,6 +80,24 @@ export default class App extends Component {
     // handle the change in inventory
     // submit customer PO to API
     this.updateInventory(object, 'supplierPO');
+  }
+
+  submitSupplierUpdate=(object)=>{
+    console.log(object)
+    const newSup = this.state.suppliers.filter(item => item.id !== object.id)
+    newSup.push(object)
+    this.setState({
+      customers: newSup
+    });
+  }
+
+  submitCustomerUpdate=(object)=>{
+    const newCust = this.state.customers.filter(item => item.id !== object.id)
+    
+    newCust.push(object)
+    this.setState({
+      customers: newCust
+    });
   }
 
   updateInventory=(object, reason)=>{
@@ -215,13 +235,13 @@ export default class App extends Component {
             to="/order-history">Order History</NavLink>
           <NavLink
             className="nav-link"
-            to="/add-customer">Add Customers</NavLink>
+            to="/add-customer">Add & Edit Customers</NavLink>
+          <NavLink
+            className="nav-link"
+            to="/add-supplier">Add & Edit Suppliers</NavLink>
           <NavLink
             className="nav-link"
             to="/add-SKU">Add SKUs</NavLink>
-          <NavLink
-            className="nav-link"
-            to="/add-supplier">Add Suppliers</NavLink>
           <NavLink
             className="nav-link"
             to="/customer-order">Customer Order</NavLink>
@@ -330,6 +350,8 @@ export default class App extends Component {
       submitSupplier: this.submitSupplier,
       submitCustomer: this.submitCustomer,
       submitSKUs: this.submitSKUs,
+      submitCustomerUpdate: this.submitCustomerUpdate,
+      submitSupplierUpdate: this.submitSupplierUpdate,
       user_id: this.state.user_id
     };
     console.log(contextValue)
