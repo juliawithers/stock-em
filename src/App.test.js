@@ -1,9 +1,21 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { configure } from 'enzyme';
+import ReactDOM from 'react-dom';
 import App from './App';
+import Adapter from 'enzyme-adapter-react-16';
+import { BrowserRouter } from 'react-router-dom';
+configure({ adapter: new Adapter() });
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe(`App component`, () => {
+    it('renders without crashing', () => {
+        const div = document.createElement('div');
+        ReactDOM.render(
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+            ,
+            div
+        );
+        ReactDOM.unmountComponentAtNode(div);
+    })
+})  
