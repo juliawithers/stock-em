@@ -9,10 +9,11 @@ import SupplierOrder from './SupplierOrder/SupplierOrder';
 import AddCustomer from './AddCustomer/AddCustomer';
 import AddSKU from './AddSKU/AddSKU';
 import AddSupplier from './AddSupplier/AddSupplier';
-import { Route, Link, withRouter, NavLink } from 'react-router-dom';
+import { Route, Link, NavLink } from 'react-router-dom';
 import './App.css'
 import context from './context'
-import config from './config'
+// import config from './config'
+// withrouter
 
 export default class App extends Component {
 
@@ -50,21 +51,39 @@ export default class App extends Component {
   // validation code here
 
   submitSupplier=(object)=>{
-    this.state.suppliers.push(object);
+    let ids = this.findMaxId(this.state.suppliers);
+    let id = ids + 1;
+    let newObject = {
+      id,
+      ...object
+    }
+    this.state.suppliers.push(newObject);
     this.setState({
       suppliers: this.state.suppliers
     });
   }
 
   submitCustomer=(object)=>{
-    this.state.customers.push(object);
+    let idc = this.findMaxId(this.state.customers);
+    let id = idc + 1;
+    let newObject = {
+      id,
+      ...object
+    }
+    this.state.customers.push(newObject);
     this.setState({
       customers: this.state.customers
     });
   }
 
   submitSKUs=(object)=>{
-    this.state.skus.push(object);
+    let idsku = this.findMaxId(this.state.skus);
+    let id = idsku + 1;
+    let newObject = {
+      id,
+      ...object
+    }
+    this.state.skus.push(newObject);
     this.setState({
       skus: this.state.skus
     });
@@ -83,17 +102,15 @@ export default class App extends Component {
   }
 
   submitSupplierUpdate=(object)=>{
-    console.log(object)
     const newSup = this.state.suppliers.filter(item => item.id !== object.id)
     newSup.push(object)
     this.setState({
-      customers: newSup
+      suppliers: newSup
     });
   }
 
   submitCustomerUpdate=(object)=>{
     const newCust = this.state.customers.filter(item => item.id !== object.id)
-    
     newCust.push(object)
     this.setState({
       customers: newCust
@@ -354,7 +371,7 @@ export default class App extends Component {
       submitSupplierUpdate: this.submitSupplierUpdate,
       user_id: this.state.user_id
     };
-    console.log(contextValue)
+    // console.log(contextValue)
     return (
       <context.Provider value={contextValue}>
         <div>

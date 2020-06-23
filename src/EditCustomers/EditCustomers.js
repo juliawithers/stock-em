@@ -43,7 +43,6 @@ export default class EditCustomers extends Component {
 
     checkRequired=()=>{
         if (!this.state.customer || !this.state.customer_name || !this.state.customer_email || !this.state.customer_number || !this.state.customer_bill_address || !this.state.customer_ship_address){
-            console.log('if ran')
             this.setState({
                 message: 'Please fill out all fields'
             })
@@ -57,7 +56,6 @@ export default class EditCustomers extends Component {
 
         const required = this.checkRequired();
         if (required === true) {    
-            console.log(this.state)
 
             const customerUpdateObj = {
                 user_id: this.context.user_id,
@@ -69,7 +67,6 @@ export default class EditCustomers extends Component {
                 bill_address: this.state.customer_bill_address,
                 ship_address: this.state.customer_ship_address
             }
-            console.log(this.state.customers)
             this.context.submitCustomerUpdate(customerUpdateObj);    
             this.setState({
                 message: 'Submission completed'
@@ -131,7 +128,6 @@ export default class EditCustomers extends Component {
     updateSelections=(e)=>{
         e.preventDefault();
         const value = e.target.value;
-        const id = e.target.id;
 
         let selected = this.context.customers.find(item => value === item.company)
 
@@ -152,6 +148,7 @@ export default class EditCustomers extends Component {
         return (
             <div>
                 <h1>Edit Customer Information</h1>
+                <p>Double check your entries before submission.</p>
                 <section>
                     <p>{this.state.message}</p>
                 </section>

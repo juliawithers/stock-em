@@ -14,7 +14,7 @@ export default class CurrentCustomers extends Component {
             customers: this.context.customers
         })
     }
-    
+
     createSupplierTables() {
         return this.state.customers.map((lineItem, i) => {
             const { company, contact, phone, email, bill_address, ship_address } = lineItem;
@@ -35,7 +35,7 @@ export default class CurrentCustomers extends Component {
         return (
             <div>
                 <h1>Current Customers Page</h1>
-                <p> table of current inventory </p>
+                <p> Table of current customers: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">
                         <tbody>

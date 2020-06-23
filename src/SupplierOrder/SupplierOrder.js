@@ -163,7 +163,7 @@ export default class SupplierOrder extends Component {
         return (
             <div>
                 <h1>Enter Supplier PO's</h1>
-                <p>This is a representative form for submitting supplier PO's and receiving in inventory.</p>
+                <p>This is a representative form for submitting supplier PO's   receiving in inventory. Please fill out all fields.</p>
                 <p>{this.state.sku_message}</p>
                 <p>{this.state.message}</p>
                 <section className="form">

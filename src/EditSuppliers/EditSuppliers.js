@@ -126,7 +126,6 @@ export default class EditSuppliers extends Component {
     updateSelections=(e)=>{
         e.preventDefault();
         const value = e.target.value;
-        const id = e.target.id;
 
         let selected = this.context.suppliers.find(item => value === item.company)
 
@@ -147,6 +146,7 @@ export default class EditSuppliers extends Component {
             <div>
                 <h1>Edit Supplier Information</h1>
                 <section>
+                    <p>Double check your entries before submission.</p>
                     <p>{this.state.message}</p>
                 </section>
                 <section className="form">

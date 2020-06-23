@@ -36,7 +36,7 @@ export default class CustomerSuppliers extends Component {
         return (
             <div>
                 <h1>Current Suppliers Page</h1>
-                <p> table of current inventory </p>
+                <p> Table of current suppliers: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">
                         <tbody>

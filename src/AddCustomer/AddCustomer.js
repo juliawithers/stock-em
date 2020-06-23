@@ -58,7 +58,7 @@ export default class AddCustomer extends Component {
             this.setState({
                 message: 'Submission successful'
             }) 
-        } else if (check === 'not unique' && required === false) {
+        } else if (check === 'not unique') {
             this.setState({
                 message: 'This customer already exists in the database. Try updating the customer data in the form below.'
             }); 
@@ -117,7 +117,7 @@ export default class AddCustomer extends Component {
         return (
             <div>
                 <h1>Add a customer to the database</h1>
-                <p>validate submissions here </p>
+                <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>
                 <section className="form">
                     <form onSubmit={this.handleSubmitCustomer}>

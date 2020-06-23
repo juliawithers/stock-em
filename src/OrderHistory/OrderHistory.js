@@ -38,7 +38,7 @@ export default class OrderHistory extends Component {
         return (
             <div>
                 <h1>Past Orders History</h1>
-                <p> table of current inventory </p>
+                <p> Table of past orders: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">
                         <tbody>

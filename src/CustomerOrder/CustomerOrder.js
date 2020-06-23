@@ -103,8 +103,6 @@ export default class CustomerOrder extends Component {
 
         const check = this.checkSKU();
         const required = this.checkRequired();
-        console.log(check)
-        console.log(required)
         if (check === false && required === true) {
             const item = this.context.skus.find(item => item.sku === this.state.sku)
             const description = item.description;
@@ -127,7 +125,6 @@ export default class CustomerOrder extends Component {
                 message: 'Submission completed'
             })
         } 
-        
 
         this.setState({
             customers: this.context.customers,

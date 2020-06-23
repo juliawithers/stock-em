@@ -57,7 +57,7 @@ export default class AddSupplier extends Component {
             this.setState({
                 message: 'Submission successful'
             }) 
-        } else if (check === 'not unique' && required === false) {
+        } else if (check === 'not unique') {
           
             this.setState({
                 message: 'This supplier already exists in the database. Try updating the supplier data in the form below.'
@@ -111,7 +111,7 @@ export default class AddSupplier extends Component {
         return (
             <div>
                 <h1>Add a supplier to the database</h1>
-                <p>validate submissions here </p>
+                <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>
                 <section className="form">
                     <form onSubmit={this.handleSubmitSupplier}>

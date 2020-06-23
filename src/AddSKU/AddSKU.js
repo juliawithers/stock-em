@@ -37,7 +37,17 @@ export default class AddSKU extends Component {
         if (!sku || !description){
             this.setState({
                 message: 'Please fill out all fields'
-            })
+            });
+            return false;
+        }
+        return true;
+    }
+
+    checkSku=()=>{
+        if (isNaN(this.state.sku)) {
+            this.setState({
+                message: 'SKU must be a number'
+            });
             return false;
         }
         return true;
@@ -45,9 +55,10 @@ export default class AddSKU extends Component {
 
     handleSubmitSKUs=(e)=>{
         e.preventDefault();
+        const num = this.checkSku();
         const check = this.checkUnique();
         const required = this.checkRequired();
-        if (check === 'unique' && required === true) {
+        if (num === true && check === 'unique' && required === true) {
             const skuObj = {
                 sku: Number(this.state.sku),
                 description: this.state.description
@@ -57,7 +68,7 @@ export default class AddSKU extends Component {
             this.setState({
                 message: 'Submission successful'
             }) 
-        } else if (check === 'not unique' && required === false) {
+        } else if (check === 'not unique') {
           
             this.setState({
                 message: 'This SKU already exists in the database'
@@ -76,7 +87,7 @@ export default class AddSKU extends Component {
         if (id === 'sku') {
             this.setState({
                 sku: value
-            });
+            });    
         }
         if (id === 'description') {
             this.setState({
@@ -93,7 +104,7 @@ export default class AddSKU extends Component {
         return (
             <div>
                 <h1>Add an SKU to the database</h1>
-                <p>validate submissions here </p>
+                <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>
                 <section className="form">
                     <form onSubmit={this.handleSubmitSKUs}>

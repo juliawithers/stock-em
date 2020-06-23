@@ -36,7 +36,7 @@ export default class CurrentInventory extends Component {
         return (
             <div>
                 <h1>Current Inventory Page</h1>
-                <p> table of current inventory </p>
+                <p> Table of current Inventory: </p>
                 <div className="table">        
                     <table className="scrolling-wrapper">
                         <tbody>
