@@ -67,23 +67,34 @@ export default class SupplierOrder extends Component {
 
     handleSubmitSupplierPO = e => {
         e.preventDefault();
-        const item = this.state.skus.find(item => item.sku.toString() == this.state.sku)
+        const item = this.state.skus.find(item => item.sku.toString() === this.state.sku);
         const description = item.description;
 
         this.verifySKUQuantity(this.state.inventory, this.state.qty, this.state.sku);
-        // let today = new Date();
-        // let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let today = new Date();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
         const supplierPOobj = {
             user_id: this.context.user_id,
             company: this.state.supplier,
-            sku: this.state.sku,
-            quantity: this.state.qty,
+            sku: Number(this.state.sku),
+            quantity: Number(this.state.qty),
             description: description,
             order: this.state.order,
-            date_added: new Date()
-        }
-        this.context.submitSupplierPO(supplierPOobj)
+            date_added: date
+        };
+        this.context.submitSupplierPO(supplierPOobj);
+
+        this.setState({
+            suppliers: this.context.suppliers,
+            inventory: this.context.inventory,
+            skus: this.context.skus,
+            sku: '',
+            supplier: '',
+            qty: '',
+            order: '',
+            description: ''
+        });
     }
 
     updateSelections = (e) => {

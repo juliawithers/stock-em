@@ -13,7 +13,9 @@ export default class CustomerOrder extends Component {
             customer: '',
             qty: '',
             order: '',
-            description: ''
+            description: '',
+            sku_message: '',
+            message: ''
         }
     }
 
@@ -52,6 +54,7 @@ export default class CustomerOrder extends Component {
 
     verifySKUQuantity(options, qty, sku) {
         let sum = 0;
+
         options.map((item, i) => {
             if (item.sku === sku) {
                 sum += item.quantity;
@@ -65,25 +68,66 @@ export default class CustomerOrder extends Component {
         return `<p></p>`;
     }
 
+
+    handleErrors(){
+        // check for overdraft of inventory
+        // get list of inventory and filter by this.state.sku, then add all the quantities together. If it's overdrafted, set a message and stop the submit.
+        let selectedSku = this.context.inventory.filter(item => item.sku === Number(this.state.sku))
+
+        // let sum=0;
+        // for loop or map
+        let sum = selectedSku.map(item =>{
+            return sum += item.quantity;
+        })
+
+        if(this.state.qty > sum) {
+            return true
+        }
+        return false
+
+    }
+
     handleSubmitCustomerPO = e => {
         e.preventDefault();
-        const item = this.state.skus.find(item => item.sku.toString() == this.state.sku)
-        const description = item.description;
 
-        this.verifySKUQuantity(this.state.inventory, this.state.qty, this.state.sku);
-        let today = new Date();
-        // let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    
-        const customerPOobj = {
-            user_id: this.context.user_id,
-            company: this.state.customer,
-            sku: this.state.sku,
-            quantity: this.state.qty,
-            description: description,
-            order: this.state.order,
-            date_entered: today
+        const check = this.handleErrors();
+        if (check === false) {
+            const item = this.state.skus.find(item => item.sku.toString() === this.state.sku)
+            const description = item.description;
+
+            this.verifySKUQuantity(this.context.inventory, this.state.qty, this.state.sku);
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+
+            const customerPOobj = {
+                user_id: this.context.user_id,
+                company: this.state.customer,
+                sku: Number(this.state.sku),
+                quantity: Number(this.state.qty),
+                description: description,
+                order: this.state.order,
+                date_entered: date
+            }
+            this.context.submitCustomerPO(customerPOobj)    
+            this.setState({
+                message: 'Submission completed'
+            })
+        } else if (check === true) {
+            this.setState({
+                message: 'Please adjust your quantities as this is overdrafting from inventory'
+            })
         }
-        this.context.submitCustomerPO(customerPOobj)
+
+        this.setState({
+            customers: this.context.customers,
+            inventory: this.context.inventory,
+            skus: this.context.skus,
+            sku: '',
+            customer: '',
+            qty: '',
+            order: '',
+            description: '',
+        })
     }
 
     updateSelections = (e) => {
@@ -96,8 +140,9 @@ export default class CustomerOrder extends Component {
         }
         if (id === 'sku') {
             this.setState({
-                sku: value
+                sku: value,
             });
+            this.showSelectedSKU(value)
         }
         if (id === 'quantity') {
             if (value === '') {
@@ -119,6 +164,21 @@ export default class CustomerOrder extends Component {
         this.setState({
             message: ''
         });
+
+    }
+
+    showSelectedSKU(value){
+        let selectedSku = this.context.inventory.filter(item => item.sku === Number(value))
+       
+        // let sum=0;
+        // for loop or map
+        let sum = selectedSku.map(item =>{
+            return sum += item.quantity;
+        })
+
+        this.setState({
+            sku_message: `SKU: ${value}, Quantity: ${sum}`
+        })
     }
 
     render() {
@@ -129,12 +189,12 @@ export default class CustomerOrder extends Component {
             <div>
                 <h1>Enter Customer PO's</h1>
                 <section>
-                    <p>There will need to be inventory validation here - if the qty entered for that SKU overpulls, then the form
-                        should not be submitted. Maybe populate current inventory of that product when the SKU is selected? </p>
-                    <p>*SELECTED SKU INVENTORY*</p>
+                    <p> Please pay close attention to the quantities listed below. </p>
+                    <p>{this.state.sku_message}</p>
+                    <p>{this.state.message}</p>
                 </section>
                 <section className="form">
-                    <form onSubmit={this.handleSubmitCustomerPO}>
+                    <form onSubmit={this.handleSubmitCustomerPO} id="customer-PO-form">
                         <table>
                             <tbody>
                                 <tr>

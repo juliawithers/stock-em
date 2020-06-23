@@ -129,7 +129,6 @@ export default {
             "user_id":"1",
             "suppliers_data": [
                 {
-                    "id": 1,
                     "company": "Company 1",
                     "contact": "John Doe",
                     "phone": "111-111-1112",
@@ -137,7 +136,6 @@ export default {
                     "address": "1234 Main St., Nowhere USA"
                 },
                 {
-                    "id": 2,
                     "company": "Company 2",
                     "contact": "John Smith",
                     "phone": "111-111-2222",

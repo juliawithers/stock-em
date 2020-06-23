@@ -28,7 +28,10 @@ export default class App extends Component {
       click: false,
       user_id: '',
       submitCustomerPO: ()=>{},
-      submitSupplierPO: ()=>{}
+      submitSupplierPO: ()=>{},
+      submitSupplier: ()=>{},
+      submitCustomer: ()=>{},
+      submitSKUs: ()=>{}
     }
   }
 
@@ -44,16 +47,37 @@ export default class App extends Component {
   }
   // validation code here
 
+  submitSupplier=(object)=>{
+    this.state.suppliers.push(object);
+    this.setState({
+      suppliers: this.state.suppliers
+    });
+  }
+
+  submitCustomer=(object)=>{
+    this.state.customers.push(object);
+    this.setState({
+      customers: this.state.customers
+    });
+  }
+
+  submitSKUs=(object)=>{
+    this.state.skus.push(object);
+    this.setState({
+      skus: this.state.skus
+    });
+  }
+
   submitCustomerPO = (object) => {
     // handle the change in inventory
     // submit customer PO to API
-    this.updateInventory(object, 'customerPO')
+    this.updateInventory(object, 'customerPO');
   }
 
   submitSupplierPO = (object) => {
     // handle the change in inventory
     // submit customer PO to API
-    this.updateInventory(object, 'supplierPO')
+    this.updateInventory(object, 'supplierPO');
   }
 
   updateInventory=(object, reason)=>{
@@ -72,20 +96,22 @@ export default class App extends Component {
         description: object.description,
         order: object.order,
         date_entered: object.date_entered
-      }
+      };
       // we filter the inventory to the selected sku. 
-      let filteredInventory = this.state.inventory.filter(item => item.sku.toString() === sku);
+      let filteredInventory = this.state.inventory.filter(item => item.sku === sku);
       // maybe put it in a queue
       const sortedInventory = filteredInventory.slice().sort((itemA, itemB) => new Date(itemA.date_added) - new Date(itemB.date_added));
 
-      
-      this.findOldestInventory(object,sortedInventory);     
+      if (sortedInventory.length > 0) {
+        this.findOldestInventory(object,sortedInventory); 
+      }
+          
 
       // submit the customerPO object to the past orders history
       this.state.past_orders.push(customerObj);
       this.setState({
         past_orders: this.state.past_orders,
-      })
+      });
     }
     else if (reason === 'supplierPO') {
       // send to database for updating inventory.  
@@ -98,12 +124,12 @@ export default class App extends Component {
         sku: object.sku,
         description: object.description,
         date_added: object.date_added
-      }
+      };
      
-      this.state.inventory.push(supplierObj)
+      this.state.inventory.push(supplierObj);
       this.setState({
         inventory: this.state.inventory,
-      })
+      });
     }
   }
 
@@ -114,7 +140,7 @@ export default class App extends Component {
         max = item.id
       }
     });
-    return max
+    return max;
   }
 
   findOldestInventory=(object, sortedInventory)=>{
@@ -129,18 +155,19 @@ export default class App extends Component {
         let diff = quantity-object.quantity;
 
         let newInv = this.adjustQuantity(invArr, id, diff)
-        this.setState({
-          inventory: newInv
-        })
-        return 
+
+        invArr = newInv
       }
       else if (qty <= object.quantity) {
         quantity+= qty;
         // at this point send the id to delete to the delete function. (to the database)
         let workingArr = invArr;
         invArr = this.deleteInventory(workingArr, sortedInventory[i].id);
-      }      
+      }    
     }
+    this.setState({
+      inventory: invArr
+    });
   }
 
   adjustQuantity=(inventory,id, diff)=>{
@@ -153,21 +180,21 @@ export default class App extends Component {
       description: item.description,
       location: item.location,
       date_added: item.date_added
-    }
+    };
 
     let newInventoryList = 
     inventory.filter(function(el){
-      return el.id != id;
+      return el.id !== id;
     });
 
-    newInventoryList.push(newItem)
-    return newInventoryList
+    newInventoryList.push(newItem);
+    return newInventoryList;
   }
 
   deleteInventory=(inventory,id)=> {
-    return inventory.filter(function(el){
-      return el.id != id;
-    })
+    return inventory.filter((el)=>{
+      return el.id !== id;
+    });
   }
 
   createNavRoutes() {
@@ -300,6 +327,9 @@ export default class App extends Component {
       skus: this.state.skus,
       submitCustomerPO: this.submitCustomerPO,
       submitSupplierPO: this.submitSupplierPO,
+      submitSupplier: this.submitSupplier,
+      submitCustomer: this.submitCustomer,
+      submitSKUs: this.submitSKUs,
       user_id: this.state.user_id
     };
     console.log(contextValue)

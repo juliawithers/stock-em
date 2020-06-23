@@ -2,12 +2,6 @@ import React from 'react'
 
 const context = React.createContext({
   handleLoginSubmit: ()=>{},
-  getCharacter: ()=>{},
-  getCharacterList: ()=>{},
-  createNewOpponent: ()=>{},
-  deleteCharacter:()=>{},
-  deleteUser:()=>{},
-  createCharacter: ()=>{},
   inventory: [],
   customers: [],
   suppliers: [],
@@ -18,6 +12,9 @@ const context = React.createContext({
   user_id: '',
   submitCustomerPO: ()=>{},
   submitSupplierPO: ()=>{},
+  submitSupplier: ()=>{},
+  submitCustomer: ()=>{},
+  submitSKUs: ()=>{}
 })
 
 export default context
