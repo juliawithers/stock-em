@@ -33,7 +33,7 @@ export default class CurrentCustomers extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h1>Current Customers Page</h1>
                 <p> Table of current customers: </p>
                 <div className="table">

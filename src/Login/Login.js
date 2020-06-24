@@ -6,7 +6,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h2>Login</h2>
                 <p>User Flows:</p>
                 <ul>

@@ -34,7 +34,7 @@ export default class CurrentInventory extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h1>Current Inventory Page</h1>
                 <p> Table of current Inventory: </p>
                 <div className="table">        

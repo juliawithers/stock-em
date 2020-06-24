@@ -34,7 +34,7 @@ export default class CustomerSuppliers extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h1>Current Suppliers Page</h1>
                 <p> Table of current suppliers: </p>
                 <div className="table">

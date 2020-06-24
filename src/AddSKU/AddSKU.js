@@ -60,6 +60,7 @@ export default class AddSKU extends Component {
         const required = this.checkRequired();
         if (num === true && check === 'unique' && required === true) {
             const skuObj = {
+                user_id: this.context.user_id,
                 sku: Number(this.state.sku),
                 description: this.state.description
             };
@@ -102,7 +103,7 @@ export default class AddSKU extends Component {
 
     render() { 
         return (
-            <div>
+            <div className="component-div">
                 <h1>Add an SKU to the database</h1>
                 <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>

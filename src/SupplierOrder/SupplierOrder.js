@@ -84,8 +84,9 @@ export default class SupplierOrder extends Component {
                 sku: Number(this.state.sku),
                 quantity: Number(this.state.qty),
                 description: description,
-                order: this.state.order,
-                date_added: date
+                cust_order: '',
+                sup_order: this.state.order,
+                date_entered: date
             };
             this.context.submitSupplierPO(supplierPOobj);    
             this.setState({
@@ -161,7 +162,7 @@ export default class SupplierOrder extends Component {
         const skuOptions = this.createSKUOptions();
 
         return (
-            <div>
+            <div className="component-div">
                 <h1>Enter Supplier PO's</h1>
                 <p>This is a representative form for submitting supplier PO's   receiving in inventory. Please fill out all fields.</p>
                 <p>{this.state.sku_message}</p>

@@ -143,7 +143,7 @@ export default class EditSuppliers extends Component {
         const supplierOptions = this.createsupplierOptions();
 
         return (
-            <div>
+            <div className="component-div">
                 <h1>Edit Supplier Information</h1>
                 <section>
                     <p>Double check your entries before submission.</p>

@@ -47,6 +47,7 @@ export default class AddSupplier extends Component {
         const required = this.checkRequired();
         if (check === 'unique' && required === true) {
             const supplierObj = {
+                user_id: this.context.user_id,
                 company: this.state.supplier,
                 contact: this.state.supplier_name,
                 phone: this.state.supplier_number,
@@ -109,7 +110,7 @@ export default class AddSupplier extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h1>Add a supplier to the database</h1>
                 <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>

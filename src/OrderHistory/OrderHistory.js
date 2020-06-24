@@ -20,14 +20,15 @@ export default class OrderHistory extends Component {
     // create table with data
     createSupplierTables() {
         return this.state.past_orders.map((lineItem, i) => {
-            const { company, sku, quantity, description, order, date_entered } = lineItem;
+            const { company, sku, quantity, description, cust_order, sup_order, date_entered } = lineItem;
             return (
                 <tr key={i}>
                     <td>{company}</td>
                     <td>{sku}</td>
                     <td>{quantity}</td>
                     <td>{description}</td>
-                    <td>{order}</td>
+                    <td>{cust_order}</td>
+                    <td>{sup_order}</td>
                     <td>{date_entered}</td>
                 </tr>
             )
@@ -36,8 +37,8 @@ export default class OrderHistory extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Past Orders History</h1>
+            <div className="component-div">
+                <h1>Order History</h1>
                 <p> Table of past orders: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">
@@ -47,7 +48,8 @@ export default class OrderHistory extends Component {
                             <th>SKU</th>
                             <th>Quantity</th>
                             <th>Description</th>
-                            <th>PO</th>
+                            <th>Customer PO</th>
+                            <th>Supplier PO</th>
                             <th>Date Entered</th>
                             </tr>
                             {this.createSupplierTables()}    

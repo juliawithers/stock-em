@@ -14,6 +14,8 @@ import './App.css'
 import context from './context'
 // import config from './config'
 // withrouter
+// need to add user_id to all data submitted to the db
+// Should be able to add supplier order to order histories as well!
 
 export default class App extends Component {
 
@@ -127,11 +129,13 @@ export default class App extends Component {
       let id = idc + 1;
       let customerObj = {
         id: id,
+        user_id: this.state.user_id,
         company: object.company,
         sku: object.sku,
         quantity: object.quantity,
         description: object.description,
-        order: object.order,
+        cust_order: object.cust_order,
+        sup_order: object.sup_order,
         date_entered: object.date_entered
       };
       // we filter the inventory to the selected sku. 
@@ -142,7 +146,8 @@ export default class App extends Component {
       if (sortedInventory.length > 0) {
         this.findOldestInventory(object,sortedInventory); 
       }
-          
+      
+      console.log(customerObj)
 
       // submit the customerPO object to the past orders history
       this.state.past_orders.push(customerObj);
@@ -156,16 +161,32 @@ export default class App extends Component {
       let id = ids + 1;
       let supplierObj = {
         id: id,
+        user_id: this.state.user_id,
         company: object.company,
-        quantity: object.quantity,
         sku: object.sku,
+        quantity: object.quantity,
         description: object.description,
-        date_added: object.date_added
+        date_entered: object.date_entered
       };
-     
+
+      let supObj = {
+        id: id,
+        user_id: this.state.user_id,
+        company: object.company,
+        sku: object.sku,
+        quantity: object.quantity,
+        description: object.description,
+        cust_order: object.cust_order,
+        sup_order: object.sup_order,
+        date_entered: object.date_entered
+      };
+      
       this.state.inventory.push(supplierObj);
+      this.state.past_orders.push(supObj);
+
       this.setState({
         inventory: this.state.inventory,
+        past_orders: this.state.past_orders
       });
     }
   }
@@ -212,6 +233,7 @@ export default class App extends Component {
 
     let newItem = {
       id: item.id,
+      user_id: this.state.user_id,
       sku: item.sku,
       quantity: diff,
       description: item.description,
@@ -348,6 +370,7 @@ export default class App extends Component {
                 suppliers to inflate inventory when it is low</p>
               <p>Please use the link below to enter the inventory site for SomeCompany Inc.</p>
             </section>
+            <button className="enter-button" onClick={this.handleClick}><Link to='/inventory'>Enter</Link></button>
         </div>
       )
     } else {
@@ -374,13 +397,12 @@ export default class App extends Component {
     // console.log(contextValue)
     return (
       <context.Provider value={contextValue}>
-        <div>
+        <div className="app">
           <nav role="navigation">
             {this.createNavRoutes()}
           </nav>
           <main>
             {this.createLanding()}
-            <button className="enter-button" onClick={this.handleClick}><Link to='/inventory'>Enter</Link></button>
             {this.createMainRoutes()}
           </main>
         </div>

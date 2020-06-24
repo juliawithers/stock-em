@@ -47,6 +47,7 @@ export default class AddCustomer extends Component {
         const required = this.checkRequired();
         if (check === 'unique' && required === true){
             const customerObj = {
+                user_id: this.context.user_id,
                 company: this.state.customer,
                 contact: this.state.customer_name,
                 phone: this.state.customer_number,
@@ -115,7 +116,7 @@ export default class AddCustomer extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h1>Add a customer to the database</h1>
                 <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>

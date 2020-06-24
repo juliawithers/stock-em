@@ -13,10 +13,28 @@
   position: relative;
 }
 
+main {
+  padding: 20px;
+}
+
 .navigation{
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  border: 2px solid black;
+  text-align: center;
+  margin-top: 5px;
+  text-decoration: none;
+  color: black;
 }
 
 table {
@@ -24,6 +42,13 @@ table {
   border-collapse: collapse;
   width: 100%;
 }
+
+.component-div {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 
 td, th {
   border: 1px solid #dddddd;
@@ -48,6 +73,12 @@ form{
   margin-right: auto;
 }
 
+button{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 input, select, button{
   max-width: 150px;
 }
@@ -61,12 +92,22 @@ input, select, button{
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
+  /* max-width: 400px; */
 }
 
 table {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   font-size: 12px;
+
 }
+
+tbody {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 h1{
   text-align: center;
 }
@@ -76,17 +117,17 @@ h1{
       padding-left: 50px;
       padding-right: 50px;
   }
+ 
+  .navigation{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
 }
+
 
 @media screen and (min-width: 1390px) {
   body{
       padding-left: 75px;
       padding-right: 75px;
-  }
-
-  .scrolling-wrapper {
-      overflow-x: hidden;
-      overflow-y: hidden;
-      white-space: nowrap;
   }
 }

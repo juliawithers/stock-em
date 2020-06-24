@@ -230,7 +230,7 @@ export default {
                     "sku": 1234,
                     "quantity": 100,
                     "description": "capacitor",
-                    "order": "PO123",
+                    "cust_order": "PO123",
                     "date_entered": "2020-1-1"
                 },
                 {
@@ -239,7 +239,25 @@ export default {
                     "sku": 1234,
                     "quantity": 50,
                     "description": "capacitor",
-                    "order": "PO1234",
+                    "cust_order": "PO1234",
+                    "date_entered": "2020-1-1"
+                },
+                {
+                    "id": 3,
+                    "company":"Some Company",
+                    "sku": 1234,
+                    "quantity": 100,
+                    "description": "capacitor",
+                    "sup_order": "SO123",
+                    "date_entered": "2020-1-1"
+                },
+                {
+                    "id": 4,
+                    "company":"Some Company Two",
+                    "sku": 1234,
+                    "quantity": 50,
+                    "description": "capacitor",
+                    "sup_order": "SO1234",
                     "date_entered": "2020-1-1"
                 }
             ]
@@ -284,7 +302,7 @@ export default {
 //     sku: sku,
 //     quantity: quantity, 
 //     description: description, 
-//     location: location,
+//     inv_location: location,
 //     date_added: date
 // }
 
@@ -294,7 +312,7 @@ export default {
 //     contact: contactName,
 //     phone: supplierPhoneNumber,
 //     email: supplierEmail,
-//     address: supplierAddress
+//     sup_address: supplierAddress
 // }
 
 // customers: {
@@ -314,13 +332,13 @@ export default {
 //     sku: sku,
 //     quantity: quantity,
 //     description: description,
-//     order: orderPO,
+//     cust_order: orderPO,
 //     date_entered: date
 // }
 
 // skus: {
 //     user_id: user_id,
 //     sku: sku,
-//     description: description, 
+//     inv_description: description, 
 //     date_added: date
 // }

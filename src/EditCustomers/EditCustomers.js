@@ -146,10 +146,10 @@ export default class EditCustomers extends Component {
         const customerOptions = this.createCustomerOptions();
 
         return (
-            <div>
+            <div className="component-div">
                 <h1>Edit Customer Information</h1>
-                <p>Double check your entries before submission.</p>
                 <section>
+                    <p>Double check your entries before submission.</p>
                     <p>{this.state.message}</p>
                 </section>
                 <section className="form">

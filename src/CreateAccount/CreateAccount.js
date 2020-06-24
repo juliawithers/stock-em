@@ -7,7 +7,7 @@ export default class CreateAccount extends Component {
 
     render() {
         return (
-            <div>
+            <div className="component-div">
                 <h2>Create your account today!</h2>
                 <form onSubmit={this.sendUserData}>
                     <div>

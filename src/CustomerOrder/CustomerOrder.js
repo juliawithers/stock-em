@@ -117,7 +117,8 @@ export default class CustomerOrder extends Component {
                 sku: Number(this.state.sku),
                 quantity: Number(this.state.qty),
                 description: description,
-                order: this.state.order,
+                cust_order: this.state.order,
+                sup_order: '',
                 date_entered: date
             }
             this.context.submitCustomerPO(customerPOobj);    
@@ -193,7 +194,7 @@ export default class CustomerOrder extends Component {
         const skuOptions = this.createSKUOptions();
 
         return (
-            <div>
+            <div className="component-div">
                 <h1>Enter Customer PO's</h1>
                 <section>
                     <p> Please pay close attention to the quantities listed below. </p>
