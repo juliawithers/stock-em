@@ -146,8 +146,6 @@ export default class App extends Component {
       if (sortedInventory.length > 0) {
         this.findOldestInventory(object,sortedInventory); 
       }
-      
-      console.log(customerObj)
 
       // submit the customerPO object to the past orders history
       this.state.past_orders.push(customerObj);
@@ -182,8 +180,7 @@ export default class App extends Component {
         sup_order: object.sup_order,
         date_entered: object.date_entered
       };
-      console.log(supplierObj)
-      console.log(supObj)
+
       this.state.inventory.push(supplierObj);
       this.state.past_orders.push(supObj);
 
@@ -205,13 +202,12 @@ export default class App extends Component {
   }
 
   findOldestInventory=(object, sortedInventory)=>{
-    console.log(sortedInventory)
+
     let quantity = 0;
     let invArr = this.state.inventory;
     for (let i=0; i<sortedInventory.length; i++) {
       let qty = sortedInventory[i].quantity
       if (qty > object.quantity) {
-        console.log(qty)
         quantity+=qty;
         // at this point send the id and qty to the update function for inventory. (to the database)
         let id = sortedInventory[i].id;
@@ -222,7 +218,6 @@ export default class App extends Component {
         invArr = newInv
       }
       else if (qty <= object.quantity) {
-        console.log(qty)
         quantity+= qty;
         // at this point send the id to delete to the delete function. (to the database)
         let workingArr = invArr;
@@ -400,7 +395,7 @@ export default class App extends Component {
       submitSupplierUpdate: this.submitSupplierUpdate,
       user_id: this.state.user_id
     };
-    console.log(contextValue)
+    // console.log(contextValue)
     return (
       <context.Provider value={contextValue}>
         <div className="app">

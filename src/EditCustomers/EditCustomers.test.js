@@ -18,4 +18,4 @@ describe(`EditCustomers component`, () => {
         );
         ReactDOM.unmountComponentAtNode(div);
     })
-}) 
+})   
