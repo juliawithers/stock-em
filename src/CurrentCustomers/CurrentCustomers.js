@@ -34,7 +34,7 @@ export default class CurrentCustomers extends Component {
     render() {
         return (
             <div className="component-div">
-                <h1>Current Customers Page</h1>
+                <h2>Current Customers Page</h2>
                 <p> Table of current customers: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">

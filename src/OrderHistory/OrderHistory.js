@@ -38,7 +38,7 @@ export default class OrderHistory extends Component {
     render() {
         return (
             <div className="component-div">
-                <h1>Order History</h1>
+                <h2>Order History</h2>
                 <p> Table of past orders: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">

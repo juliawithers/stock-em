@@ -37,6 +37,10 @@ main {
   color: black;
 }
 
+.active {
+  background-color: yellow;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -108,7 +112,7 @@ tbody {
   margin-right: auto;
 }
 
-h1{
+h1,h2{
   text-align: center;
 }
 

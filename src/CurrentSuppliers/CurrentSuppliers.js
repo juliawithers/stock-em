@@ -19,14 +19,14 @@ export default class CustomerSuppliers extends Component {
     // create table with data
     createSupplierTables() {
         return this.state.suppliers.map((lineItem, i) => {
-            const { company, contact, phone, email, address } = lineItem;
+            const { company, contact, phone, email, sup_address } = lineItem;
             return (
                 <tr key={i}>
                     <td>{company}</td>
                     <td>{contact}</td>
                     <td>{phone}</td>
                     <td>{email}</td>
-                    <td>{address}</td>
+                    <td>{sup_address}</td>
                 </tr>
             )
         })
@@ -35,7 +35,7 @@ export default class CustomerSuppliers extends Component {
     render() {
         return (
             <div className="component-div">
-                <h1>Current Suppliers Page</h1>
+                <h2>Current Suppliers Page</h2>
                 <p> Table of current suppliers: </p>
                 <div className="table">
                     <table className="scrolling-wrapper">

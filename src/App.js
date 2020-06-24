@@ -133,7 +133,7 @@ export default class App extends Component {
         company: object.company,
         sku: object.sku,
         quantity: object.quantity,
-        description: object.description,
+        inv_description: object.inv_description,
         cust_order: object.cust_order,
         sup_order: object.sup_order,
         date_entered: object.date_entered
@@ -141,7 +141,7 @@ export default class App extends Component {
       // we filter the inventory to the selected sku. 
       let filteredInventory = this.state.inventory.filter(item => item.sku === sku);
       // maybe put it in a queue
-      const sortedInventory = filteredInventory.slice().sort((itemA, itemB) => new Date(itemA.date_added) - new Date(itemB.date_added));
+      const sortedInventory = filteredInventory.slice().sort((itemA, itemB) => new Date(itemA.date_entered) - new Date(itemB.date_entered));
 
       if (sortedInventory.length > 0) {
         this.findOldestInventory(object,sortedInventory); 
@@ -161,26 +161,29 @@ export default class App extends Component {
       let id = ids + 1;
       let supplierObj = {
         id: id,
-        user_id: this.state.user_id,
-        company: object.company,
         sku: object.sku,
         quantity: object.quantity,
-        description: object.description,
+        inv_description: object.inv_description,
+        inv_location: object.inv_location,
         date_entered: object.date_entered
       };
 
+      let ido = this.findMaxId(this.state.past_orders);
+      let iD = ido + 1;
+      
       let supObj = {
-        id: id,
+        id: iD,
         user_id: this.state.user_id,
         company: object.company,
         sku: object.sku,
         quantity: object.quantity,
-        description: object.description,
+        inv_description: object.inv_description,
         cust_order: object.cust_order,
         sup_order: object.sup_order,
         date_entered: object.date_entered
       };
-      
+      console.log(supplierObj)
+      console.log(supObj)
       this.state.inventory.push(supplierObj);
       this.state.past_orders.push(supObj);
 
@@ -202,11 +205,13 @@ export default class App extends Component {
   }
 
   findOldestInventory=(object, sortedInventory)=>{
+    console.log(sortedInventory)
     let quantity = 0;
     let invArr = this.state.inventory;
     for (let i=0; i<sortedInventory.length; i++) {
       let qty = sortedInventory[i].quantity
       if (qty > object.quantity) {
+        console.log(qty)
         quantity+=qty;
         // at this point send the id and qty to the update function for inventory. (to the database)
         let id = sortedInventory[i].id;
@@ -217,6 +222,7 @@ export default class App extends Component {
         invArr = newInv
       }
       else if (qty <= object.quantity) {
+        console.log(qty)
         quantity+= qty;
         // at this point send the id to delete to the delete function. (to the database)
         let workingArr = invArr;
@@ -236,9 +242,9 @@ export default class App extends Component {
       user_id: this.state.user_id,
       sku: item.sku,
       quantity: diff,
-      description: item.description,
-      location: item.location,
-      date_added: item.date_added
+      inv_description: item.inv_description,
+      inv_location: item.inv_location,
+      date_entered: item.date_entered
     };
 
     let newInventoryList = 
@@ -364,7 +370,7 @@ export default class App extends Component {
     if (this.state.click === false){
       return (
         <div>
-          <h1>Landing Page</h1>
+          <h2>Landing Page</h2>
             <section>
               <p>This app is intendend to help users track their inventory, place orders for customers, and place orders to
                 suppliers to inflate inventory when it is low</p>
@@ -394,10 +400,11 @@ export default class App extends Component {
       submitSupplierUpdate: this.submitSupplierUpdate,
       user_id: this.state.user_id
     };
-    // console.log(contextValue)
+    console.log(contextValue)
     return (
       <context.Provider value={contextValue}>
         <div className="app">
+          <header><h1>Stock'Em!</h1></header>
           <nav role="navigation">
             {this.createNavRoutes()}
           </nav>

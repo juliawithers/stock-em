@@ -14,6 +14,7 @@ export default class SupplierOrder extends Component {
             qty: '',
             order: '',
             description: '',
+            location: '',
             message: '',
             sku_message: '',
             selected: ''
@@ -72,7 +73,7 @@ export default class SupplierOrder extends Component {
 
         if (required === true) {
             const item = this.context.skus.find(item => item.sku === this.state.sku);
-            const description = item.description;
+            const description = item.inv_description;
 
             let today = new Date();
             let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
@@ -83,7 +84,8 @@ export default class SupplierOrder extends Component {
                 company: this.state.supplier,
                 sku: Number(this.state.sku),
                 quantity: Number(this.state.qty),
-                description: description,
+                inv_description: description,
+                inv_location: this.state.location,
                 cust_order: '',
                 sup_order: this.state.order,
                 date_entered: date
@@ -102,7 +104,8 @@ export default class SupplierOrder extends Component {
             supplier: '',
             qty: '',
             order: '',
-            description: ''
+            description: '',
+            location: ''
         });
     }
 
@@ -134,6 +137,11 @@ export default class SupplierOrder extends Component {
                 });
             }
         }
+        if (id === 'location') {
+            this.setState({
+                location: value
+            });
+        }
         if (id === 'purchase-order') {
             this.setState({
                 order: value
@@ -163,7 +171,7 @@ export default class SupplierOrder extends Component {
 
         return (
             <div className="component-div">
-                <h1>Enter Supplier PO's</h1>
+                <h2>Enter Supplier PO's</h2>
                 <p>This is a representative form for submitting supplier PO's   receiving in inventory. Please fill out all fields.</p>
                 <p>{this.state.sku_message}</p>
                 <p>{this.state.message}</p>
@@ -200,6 +208,15 @@ export default class SupplierOrder extends Component {
                                     <td>
                                         <input name="quantity" type="number" value={this.state.qty} 
                                         id="quantity" onChange={this.updateSelections}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label htmlFor="location">Inventory location: </label>
+                                    </td>
+                                    <td>
+                                        <input name="location" type="text" value={this.state.location} 
+                                        id="location" onChange={this.updateSelections}/>
                                     </td>
                                 </tr>
                                 <tr>

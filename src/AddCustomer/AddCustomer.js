@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import context from '../context';
 import EditCustomers from '../EditCustomers/EditCustomers';
 
-export default class AddCustomer extends Component {
+class AddCustomer extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
@@ -74,6 +75,7 @@ export default class AddCustomer extends Component {
             customer_ship_address: ''
         });   
         
+        this.props.history.push('/customers');
     }
 
     updateInputs=(e)=>{
@@ -117,7 +119,7 @@ export default class AddCustomer extends Component {
     render() {
         return (
             <div className="component-div">
-                <h1>Add a customer to the database</h1>
+                <h2>Add a customer to the database</h2>
                 <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>
                 <section className="form">
@@ -184,3 +186,5 @@ export default class AddCustomer extends Component {
         )
     }
 }
+
+export default withRouter(AddCustomer)

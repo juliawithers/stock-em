@@ -105,7 +105,7 @@ export default class CustomerOrder extends Component {
         const required = this.checkRequired();
         if (check === false && required === true) {
             const item = this.context.skus.find(item => item.sku === this.state.sku)
-            const description = item.description;
+            const description = item.inv_description;
 
             this.verifySKUQuantity(this.context.inventory, this.state.qty, this.state.sku);
             let today = new Date();
@@ -195,7 +195,7 @@ export default class CustomerOrder extends Component {
 
         return (
             <div className="component-div">
-                <h1>Enter Customer PO's</h1>
+                <h2>Enter Customer PO's</h2>
                 <section>
                     <p> Please pay close attention to the quantities listed below. </p>
                     <p>{this.state.sku_message}</p>

@@ -62,7 +62,7 @@ export default class AddSKU extends Component {
             const skuObj = {
                 user_id: this.context.user_id,
                 sku: Number(this.state.sku),
-                description: this.state.description
+                inv_description: this.state.description
             };
 
             this.context.submitSKUs(skuObj); 
@@ -104,7 +104,7 @@ export default class AddSKU extends Component {
     render() { 
         return (
             <div className="component-div">
-                <h1>Add an SKU to the database</h1>
+                <h2>Add an SKU to the database</h2>
                 <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>
                 <section className="form">

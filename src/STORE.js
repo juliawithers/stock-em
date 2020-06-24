@@ -3,12 +3,12 @@ export default {
         {
             "id": "1",
             "username": "username1",
-            "password":"password1"
+            "passw":"password1"
         },
         {
             "id": "2",
             "username": "username2",
-            "password":"password2"
+            "passw":"password2"
         }
     ],
     "inventories": [
@@ -20,33 +20,33 @@ export default {
                     "id": 1,
                     "sku":1234,
                     "quantity":25,
-                    "description": "capacitor",
-                    "location": "M01",
-                    "date_added": "2020-5-5"
+                    "inv_description": "capacitor",
+                    "inv_location": "M01",
+                    "date_entered": "2020-5-5"
                 },
                 {
                     "id": 2,
                     "sku":12344,
                     "quantity":5,
-                    "description": "overload",
-                    "location": "M03",
-                    "date_added": "2020-5-1"
+                    "inv_description": "overload",
+                    "inv_location": "M03",
+                    "date_entered": "2020-5-1"
                 },
                 {
                     "id": 3,
                     "sku":1234,
                     "quantity":5,
-                    "description": "capacitor",
-                    "location": "M03",
-                    "date_added": "2020-5-1"
+                    "inv_description": "capacitor",
+                    "inv_location": "M03",
+                    "date_entered": "2020-5-1"
                 },
                 {
                     "id": 4,
                     "sku":5555,
                     "quantity":15,
-                    "description": "relay",
-                    "location": "M03",
-                    "date_added": "2020-5-1"
+                    "inv_description": "relay",
+                    "inv_location": "M03",
+                    "date_entered": "2020-5-1"
                 }
             ],
         },
@@ -58,17 +58,17 @@ export default {
                     "id": 1,
                     "sku":2222,
                     "quantity":250,
-                    "description": "relay",
-                    "location": "M01",
-                    "date_added": "2020-5-5"
+                    "inv_description": "relay",
+                    "inv_location": "M01",
+                    "date_entered": "2020-5-5"
                 },
                 {
                     "id": 2,
                     "sku":223344,
                     "quantity":15,
-                    "description": "overload",
-                    "location": "M03",
-                    "date_added": "2020-5-1"
+                    "inv_description": "overload",
+                    "inv_location": "M03",
+                    "date_entered": "2020-5-1"
                 }
             ],
         }
@@ -81,26 +81,26 @@ export default {
                 {
                     "id": 1,
                     "sku":1234,
-                    "description": "capacitor",
-                    "date_added": "2020-5-5"
+                    "inv_description": "capacitor",
+                    "date_entered": "2020-5-5"
                 },
                 {
                     "id": 2,
                     "sku":12344,
-                    "description": "overload",
-                    "date_added": "2020-5-1"
+                    "inv_description": "overload",
+                    "date_entered": "2020-5-1"
                 },
                 {
                     "id": 3,
                     "sku":5555,
-                    "description": "relay",
-                    "date_added": "2020-5-1"
+                    "inv_description": "relay",
+                    "date_entered": "2020-5-1"
                 },
                 {
                     "id": 4,
                     "sku":12345,
-                    "description": "overload",
-                    "date_added": "2020-5-1"
+                    "inv_description": "overload",
+                    "date_entered": "2020-5-1"
                 }
             ],
         },
@@ -111,14 +111,14 @@ export default {
                 {
                     "id": 1,
                     "sku":2222,
-                    "description": "relay",
-                    "date_added": "2020-5-5"
+                    "inv_description": "relay",
+                    "date_entered": "2020-5-5"
                 },
                 {
                     "id": 2,
                     "sku":223344,
-                    "description": "overload",
-                    "date_added": "2020-5-1"
+                    "inv_description": "overload",
+                    "date_entered": "2020-5-1"
                 }
             ],
         }
@@ -134,7 +134,7 @@ export default {
                     "contact": "John Doe",
                     "phone": "111-111-1112",
                     "email": "111222@gmail.com",
-                    "address": "1234 Main St., Nowhere USA"
+                    "sup_address": "1234 Main St., Nowhere USA"
                 },
                 {
                     "id": 2,
@@ -142,7 +142,7 @@ export default {
                     "contact": "John Smith",
                     "phone": "111-111-2222",
                     "email": "1234@gmail.com",
-                    "address": "555 Main St., Nowhere USA"
+                    "sup_address": "555 Main St., Nowhere USA"
                 }
             ]
         },
@@ -156,7 +156,7 @@ export default {
                     "contact": "John Doe",
                     "phone": "111-111-1112",
                     "email": "111222@gmail.com",
-                    "address": "1234 Main St., Nowhere USA"
+                    "sup_address": "1234 Main St., Nowhere USA"
                 },
                 {
                     "id": 2,
@@ -164,7 +164,7 @@ export default {
                     "contact": "John Smith",
                     "phone": "111-111-2222",
                     "email": "1234@gmail.com",
-                    "address": "555 Main St., Nowhere USA"
+                    "sup_address": "555 Main St., Nowhere USA"
                 }
             ]
         }
@@ -229,8 +229,9 @@ export default {
                     "company":"Some Company",
                     "sku": 1234,
                     "quantity": 100,
-                    "description": "capacitor",
+                    "inv_description": "capacitor",
                     "cust_order": "PO123",
+                    "sup_order": "",
                     "date_entered": "2020-1-1"
                 },
                 {
@@ -238,8 +239,9 @@ export default {
                     "company":"Some Company Two",
                     "sku": 1234,
                     "quantity": 50,
-                    "description": "capacitor",
+                    "inv_description": "capacitor",
                     "cust_order": "PO1234",
+                    "sup_order": "PO123",
                     "date_entered": "2020-1-1"
                 },
                 {
@@ -247,7 +249,8 @@ export default {
                     "company":"Some Company",
                     "sku": 1234,
                     "quantity": 100,
-                    "description": "capacitor",
+                    "inv_description": "capacitor",
+                    "cust_order": "",
                     "sup_order": "SO123",
                     "date_entered": "2020-1-1"
                 },
@@ -256,7 +259,8 @@ export default {
                     "company":"Some Company Two",
                     "sku": 1234,
                     "quantity": 50,
-                    "description": "capacitor",
+                    "inv_description": "capacitor",
+                    "cust_order": "",
                     "sup_order": "SO1234",
                     "date_entered": "2020-1-1"
                 }
@@ -271,8 +275,9 @@ export default {
                     "company":"Some Company",
                     "sku": 1234,
                     "quantity": 100,
-                    "description": "capacitor",
-                    "order": "PO123",
+                    "inv_description": "capacitor",
+                    "cust_order": "PO123",
+                    "sup_order": "",
                     "date_entered": "2020-1-1"
                 },
                 {
@@ -280,8 +285,9 @@ export default {
                     "company":"Some Company Two",
                     "sku": 1234,
                     "quantity": 50,
-                    "description": "capacitor",
-                    "order": "PO1234",
+                    "inv_description": "capacitor",
+                    "cust_order": "PO1234",
+                    "sup_order": "",
                     "date_entered": "2020-1-1"
                 }
             ]
@@ -301,9 +307,9 @@ export default {
 //     user_id: user_id,
 //     sku: sku,
 //     quantity: quantity, 
-//     description: description, 
-//     inv_location: location,
-//     date_added: date
+//     inv_description: inv_description, 
+//     inv_inv_location: inv_location,
+//     date_entered: date
 // }
 
 // suppliers: {
@@ -331,7 +337,7 @@ export default {
 //     company: customerCompanyName, 
 //     sku: sku,
 //     quantity: quantity,
-//     description: description,
+//     inv_description: inv_description,
 //     cust_order: orderPO,
 //     date_entered: date
 // }
@@ -339,6 +345,6 @@ export default {
 // skus: {
 //     user_id: user_id,
 //     sku: sku,
-//     inv_description: description, 
-//     date_added: date
+//     inv_inv_description: inv_description, 
+//     date_entered: date
 // }

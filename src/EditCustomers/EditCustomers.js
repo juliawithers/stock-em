@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import context from '../context';
 
-export default class EditCustomers extends Component {
+class EditCustomers extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
@@ -85,6 +86,8 @@ export default class EditCustomers extends Component {
             customer_bill_address: '',
             customer_ship_address: ''
         })
+
+        this.props.history.push('/customers');
     }
 
     updateInputs=(e)=>{
@@ -147,7 +150,7 @@ export default class EditCustomers extends Component {
 
         return (
             <div className="component-div">
-                <h1>Edit Customer Information</h1>
+                <h2>Edit Customer Information</h2>
                 <section>
                     <p>Double check your entries before submission.</p>
                     <p>{this.state.message}</p>
@@ -216,3 +219,5 @@ export default class EditCustomers extends Component {
         )
     }
 }
+
+export default withRouter(EditCustomers)

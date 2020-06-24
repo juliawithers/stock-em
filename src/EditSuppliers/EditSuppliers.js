@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import context from '../context';
 
-export default class EditSuppliers extends Component {
+class EditSuppliers extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
@@ -13,8 +14,7 @@ export default class EditSuppliers extends Component {
             supplier_name: '',
             supplier_email: '',
             supplier_number: '',
-            supplier_bill_address: '',
-            supplier_ship_address: '',
+            supplier_address: '',
             id: '',
             message: ''
         }
@@ -24,7 +24,14 @@ export default class EditSuppliers extends Component {
         this.setState({
             suppliers: this.context.suppliers,
             inventory: this.context.inventory,
-            skus: this.context.skus
+            skus: this.context.skus,
+            supplier: '',
+            supplier_name: '',
+            supplier_email: '',
+            supplier_number: '',
+            supplier_address: '',
+            id: '',
+            message: ''
         })
     }
     // validation code here
@@ -65,7 +72,7 @@ export default class EditSuppliers extends Component {
                 contact: this.state.supplier_name,
                 email: this.state.supplier_email,
                 phone: this.state.supplier_number,
-                address: this.state.supplier_address
+                sup_address: this.state.supplier_address
             }
             this.context.submitSupplierUpdate(supplierUpdateObj);    
             this.setState({
@@ -88,6 +95,9 @@ export default class EditSuppliers extends Component {
             supplier_number: '',
             supplier_address: ''
         })
+        
+        this.props.history.push('/suppliers');
+
     }
 
     updateInputs=(e)=>{
@@ -135,7 +145,7 @@ export default class EditSuppliers extends Component {
             supplier_name: selected.contact,
             supplier_email: selected.email,
             supplier_number: selected.phone,
-            supplier_address: selected.address,
+            supplier_address: selected.sup_address,
         })
     }
 
@@ -144,7 +154,7 @@ export default class EditSuppliers extends Component {
 
         return (
             <div className="component-div">
-                <h1>Edit Supplier Information</h1>
+                <h2>Edit Supplier Information</h2>
                 <section>
                     <p>Double check your entries before submission.</p>
                     <p>{this.state.message}</p>
@@ -205,3 +215,5 @@ export default class EditSuppliers extends Component {
         )
     }
 }
+
+export default withRouter(EditSuppliers)

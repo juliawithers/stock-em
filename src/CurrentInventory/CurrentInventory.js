@@ -20,13 +20,14 @@ export default class CurrentInventory extends Component {
     // create table with data
     createInventoryTables() {
         return this.state.inventory.map((lineItem, i) => {
-            const { sku, quantity, description, location } = lineItem;
+            const { id, sku, quantity, inv_description, inv_location, date_entered} = lineItem;
             return (
-                <tr key={i}>
+                <tr key={id}>
                     <td>{sku}</td>
                     <td>{quantity}</td>
-                    <td>{description}</td>
-                    <td>{location}</td>    
+                    <td>{inv_description}</td>
+                    <td>{inv_location}</td>  
+                    <td>{date_entered}</td>  
                 </tr>    
             )
         })
@@ -35,7 +36,7 @@ export default class CurrentInventory extends Component {
     render() {
         return (
             <div className="component-div">
-                <h1>Current Inventory Page</h1>
+                <h2>Current Inventory Page</h2>
                 <p> Table of current Inventory: </p>
                 <div className="table">        
                     <table className="scrolling-wrapper">
@@ -45,6 +46,7 @@ export default class CurrentInventory extends Component {
                                 <th>Quantity</th>
                                 <th>Description</th>
                                 <th>Location</th>
+                                <th>Date Received (ymd)</th>
                             </tr>
                             {this.createInventoryTables()}    
                         </tbody>

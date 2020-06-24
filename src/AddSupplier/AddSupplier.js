@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import context from '../context';
 import EditSuppliers from '../EditSuppliers/EditSuppliers';
 
-export default class AddSupplier extends Component {
+class AddSupplier extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
@@ -52,7 +53,7 @@ export default class AddSupplier extends Component {
                 contact: this.state.supplier_name,
                 phone: this.state.supplier_number,
                 email: this.state.supplier_email,
-                address: this.state.supplier_address
+                sup_address: this.state.supplier_address
             };
             this.context.submitSupplier(supplierObj); 
             this.setState({
@@ -64,6 +65,7 @@ export default class AddSupplier extends Component {
                 message: 'This supplier already exists in the database. Try updating the supplier data in the form below.'
             }); 
         } 
+
         this.setState({
             suppliers: this.context.suppliers,
             supplier: '',
@@ -72,6 +74,8 @@ export default class AddSupplier extends Component {
             supplier_number: '',
             supplier_address: '',
         });
+
+        this.props.history.push('/suppliers');
     }
 
     updateInputs=(e)=>{
@@ -111,7 +115,7 @@ export default class AddSupplier extends Component {
     render() {
         return (
             <div className="component-div">
-                <h1>Add a supplier to the database</h1>
+                <h2>Add a supplier to the database</h2>
                 <p>Please fill out all fields.</p>
                 <p>{this.state.message}</p>
                 <section className="form">
@@ -170,3 +174,5 @@ export default class AddSupplier extends Component {
         )
     }
 }
+
+export default withRouter(AddSupplier)
