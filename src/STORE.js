@@ -262,7 +262,7 @@ export default {
                     "inv_description": "capacitor",
                     "cust_order": "",
                     "sup_order": "SO1234",
-                    "date_entered": "2020-1-1"
+                    "date_entered": "2020-5-1"
                 }
             ]
         },
@@ -278,7 +278,7 @@ export default {
                     "inv_description": "capacitor",
                     "cust_order": "PO123",
                     "sup_order": "",
-                    "date_entered": "2020-1-1"
+                    "date_entered": "2020-1-2"
                 },
                 {
                     "id": 2,

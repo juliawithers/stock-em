@@ -124,7 +124,7 @@ class AddSupplier extends Component {
                             <tbody>
                                 <tr>
                                     <td>
-                                        <label htmlFor="supplier">Supplier name: </label>
+                                        <label htmlFor="supplier">Supplier business name: </label>
                                     </td>
                                     <td>
                                         <input name="supplier" value={this.state.supplier} id="supplier" onChange={this.updateInputs}/>

@@ -128,7 +128,7 @@ class AddCustomer extends Component {
                             <tbody>
                                 <tr>
                                     <td>
-                                        <label htmlFor="customer">Customer name: </label>
+                                        <label htmlFor="customer">Customer business name: </label>
                                     </td>
                                     <td>
                                         <input name="customer" value={this.state.customer} id="customer" onChange={this.updateInputs}/>

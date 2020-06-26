@@ -364,7 +364,7 @@ export default class App extends Component {
   createLanding(){
     if (this.state.click === false){
       return (
-        <div>
+        <div className="landing">
           <h2>Landing Page</h2>
             <section>
               <p>This app is intendend to help users track their inventory, place orders for customers, and place orders to
