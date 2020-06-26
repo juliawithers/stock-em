@@ -84,9 +84,6 @@ form{
   margin-right: auto;
 }
 
-/* filter-div, filter, labels, selects */
-
-/* sort-div, sort, labels, selects */
 .options {
   display: flex;
   flex-direction: row;

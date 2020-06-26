@@ -18,7 +18,6 @@ export default class CurrentInventory extends Component {
         this.setState({
             inventory: this.context.inventory
         })
-        console.log(this.context.inventory)
     }
 
     createInventoryTables() {
@@ -196,15 +195,11 @@ export default class CurrentInventory extends Component {
 
     clearSort = (e) => {
         e.preventDefault();
-        console.log(this.state.inventory)
         this.setState({
             sort_choice: 'Choose one',
             inventory: this.context.inventory
         })
-        console.log(this.state.sort_choice)
     }
-    // filter-div, filter, labels, selects
-    // sort-div, sort, labels, selects
 
     render() {
         return (
