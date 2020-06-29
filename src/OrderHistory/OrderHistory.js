@@ -1,26 +1,28 @@
 import React, { Component }  from 'react';
 import context from '../context';
+import Filter from '../Filter/Filter';
+import Sort from '../Sort/Sort';
 
 export default class OrderHistory extends Component {
     static contextType = context;
     constructor(props) {
         super(props);
         this.state = {
-            past_orders: []
+            past_orders: [],
+            sortOrders: []
         }
     }
 
     componentDidMount(){
         this.setState({
-            past_orders: this.context.past_orders
+            past_orders: this.context.past_orders,
+            sortOrders: this.context.past_orders
         })
     }
-    // validation code here
 
-    // create table with data
     createSupplierTables() {
         return this.state.past_orders.map((lineItem, i) => {
-            const { company, sku, quantity, description, cust_order, sup_order, date_entered } = lineItem;
+            const { company, sku, quantity, inv_description, cust_order, sup_order, date_entered } = lineItem;
 
             let dateArr = date_entered.split('-');
             let date=[];
@@ -38,7 +40,7 @@ export default class OrderHistory extends Component {
                     <td>{company}</td>
                     <td>{sku}</td>
                     <td>{quantity}</td>
-                    <td>{description}</td>
+                    <td>{inv_description}</td>
                     <td>{cust_order}</td>
                     <td>{sup_order}</td>
                     <td>{fullDate}</td>
@@ -47,11 +49,44 @@ export default class OrderHistory extends Component {
         })
     }
 
+    updateOrders=(orders)=>{
+        this.setState({
+            past_orders: orders
+        })
+        this.updateDataToSort(orders)
+    }
+
+    clearFilter = (past_orders) => {
+        this.setState({
+            filter_choice: 'Choose one',
+            filter_options: 'Choose one',
+            filter: '',
+            past_orders: past_orders
+        })
+    }
+
+    clearSort = (past_orders) => {
+        this.setState({
+            sort_choice: 'Choose one',
+            past_orders: past_orders
+        })
+    }
+
+    updateDataToSort=(data)=>{
+        this.setState({
+            sortOrders: data
+        })
+    }
+
     render() {
         return (
             <div className="component-div">
                 <h2>Order History</h2>
                 <p> Table of past orders: </p>
+                <div className="options">
+                    <Filter options={['company','sku','description','date_entered']} data={'orders'} handleUpdateOrders={this.updateOrders} handleClearFilter={this.clearFilter}/>
+                    <Sort data={this.state.sortOrders} ident='orders' handleUpdateFunction={this.updateOrders} handleClearSort={this.clearSort}/>
+                </div>
                 <div className="table">
                     <table className="scrolling-wrapper">
                         <tbody>

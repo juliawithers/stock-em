@@ -26,11 +26,15 @@ main {
 }
 
 .navigation{
+  position: absolute;
+  left: 0px;
+  z-index: 100;
   margin-top: 15px;
   display: flex;
-  flex-direction: column;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  padding: 10px;
+  background-color: rgba(170, 168, 168, 0.87);
 }
 
 .nav-link {
@@ -43,6 +47,23 @@ main {
   margin-top: 5px;
   text-decoration: none;
   color: black;
+  background-color: white;
+}
+
+.big-screen {
+  display: none;
+}
+
+.ham {
+  display: flex;
+  justify-content: center;
+}
+#hamburger {
+  width: 30px;
+}
+
+#hamburger:hover {
+  cursor: pointer;
 }
 
 .active {
@@ -62,13 +83,19 @@ table {
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  border: 1px solid teal;
   text-align: left;
   padding: 8px;
 }
 
+th {
+  background-color: teal;
+  border: 1px solid #dddddd;
+}
+
 tr:nth-child(even) {
   background-color: #dddddd;
+  border: 1px solid teal;
 }
 
 .form{
@@ -87,11 +114,18 @@ form{
 .options {
   display: flex;
   flex-direction: row;
+  padding-bottom: 10px;
+  border: 1px dashed black;
+  margin-bottom: 10px;
+  max-width: 650px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .filter {
   text-align: center;
 }
+
 .filter>select,label {
   margin-top: 3px;
   margin-bottom: 5px;
@@ -103,6 +137,12 @@ form{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  /* border: 1px dashed black; */
+}
+
+.unfilter {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .sort>select,label {
@@ -117,12 +157,8 @@ form{
   margin-right: auto;
   text-align: center;
 }
-.unsort {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
 
-.unfilter {
+.unsort {
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -131,6 +167,8 @@ button{
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  height: 30px;
+  display: block;
 }
 
 input, select, button{
@@ -146,7 +184,7 @@ input, select, button{
   overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
-  /* max-width: 400px; */
+  padding-bottom: 10px;
 }
 
 table {
@@ -178,6 +216,115 @@ h1,h2{
   }
 }
 
+@media screen and (min-width: 750px){
+  .big-screen{
+    display: block
+  }
+  .small-screen{
+    display: none
+  }
+
+  .navigation{
+    position: inherit;
+    z-index: auto;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 10px;
+    background-color:white;
+  }
+  
+  .nav-link {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+    border: 2px solid black;
+    text-align: center;
+    margin-top: 5px;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+  }
+
+  .active {
+    background-color: yellow;
+  }
+
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    border: 1px dashed black;
+    margin-bottom: 10px;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .filter {
+    display: flex;
+    flex-direction: row;
+    line-height: 2;
+  }
+
+  .filter>select,label {
+    margin-left: 3px;
+    margin-right: 5px;
+  }
+
+  .filter-div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+  }
+
+  .filter>button{
+    line-height: 2;
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+
+  .unfilter {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .sort{
+    display: flex;
+    flex-direction: row;
+    line-height: 2;
+  }
+
+  .sort>button{
+    line-height: 2;
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+
+  .sort>select,label {
+    margin-left: 3px;
+    margin-right: 5px;
+  }
+
+  .sort-div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    line-height: 2;
+  }
+
+  .unsort {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+}
 
 @media screen and (min-width: 1390px) {
   body{
