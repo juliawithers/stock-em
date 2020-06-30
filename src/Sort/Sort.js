@@ -23,6 +23,7 @@ export default class Sort extends Component {
     }
 
     sortData = (e) => {
+        console.log(this.props.data)
         e.preventDefault();
         if (this.state.sort_choice === "date") {
             const data = this.props.data.sort(function (itemA, itemB) {
@@ -37,8 +38,8 @@ export default class Sort extends Component {
         }
         if (this.state.sort_choice === "quantity") {
             const data = this.props.data.sort(function (itemA, itemB) {
-                let keyA = itemA.quantity;
-                let keyB = itemB.quantity;
+                let keyA = Number(itemA.quantity);
+                let keyB = Number(itemB.quantity);
                 if (keyA < keyB) return -1;
                 if (keyA < keyB) return 1;
                 return 0;

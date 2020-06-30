@@ -15,8 +15,6 @@ import xOut from './pictures/x_out.png'
 import context from './context'
 import config from './config' 
 
-// create separate landing endpoint just for posterity sake
-
 export default class App extends Component {
 
   static contextType = context;
@@ -286,7 +284,6 @@ export default class App extends Component {
   }
 
   submitUpdatePastOrders=(object)=>{
-    console.log(object)
     fetch(config.API_ENDPOINT+`/past-orders`, {
       method: 'POST',
       body: JSON.stringify(object),
@@ -347,11 +344,9 @@ export default class App extends Component {
   }
 
   updateInventory = (object, reason) => {
-    console.log('updateInventory ran')
     let sku = object.sku;
 
     if (reason === 'customerPO') {
-      console.log('if reason customerPO ran')
       let customerObj = {
         user_id: this.state.user_id,
         company: object.company,
@@ -363,17 +358,11 @@ export default class App extends Component {
         date_entered: object.date_entered
       };
 
-      console.log(customerObj)
-      console.log(this.state.inventory)
       let filteredInventory = this.state.inventory.filter(item => item.sku === sku.toString());
-      console.log(filteredInventory)
 
       const sortedInventory = filteredInventory.slice().sort((itemA, itemB) => new Date(itemA.date_entered) - new Date(itemB.date_entered));
-      console.log(sortedInventory)
-
 
       if (sortedInventory.length > 0) {
-        console.log('if ran')
         this.findOldestInventory(object, sortedInventory);
       }
   
@@ -589,11 +578,11 @@ export default class App extends Component {
     this.setState({
       click: true
     })
-    this.getAllCustomers();
-    this.getAllInventory();
-    this.getAllSuppliers();
-    this.getAllSkus();
-    this.getAllPastOrders();
+    // this.getAllCustomers();
+    // this.getAllInventory();
+    // this.getAllSuppliers();
+    // this.getAllSkus();
+    // this.getAllPastOrders();
   }
 
   createLanding() {
@@ -637,6 +626,11 @@ export default class App extends Component {
       : <div className="menu">
         {this.createNavRoutes()}
       </div>
+    let bigMenu = this.state.click === true 
+      ? <div className="big-screen">
+          {this.createNavRoutes()}
+        </div>
+      : <div></div>
 
     return (
       <context.Provider value={contextValue}>
@@ -647,9 +641,7 @@ export default class App extends Component {
               {this.hamburgerClick()}
               {menu}  
             </div>
-            <div className="big-screen">
-              {this.createNavRoutes()}
-            </div>
+            {bigMenu}
           </nav>
           <main>
             {this.createLanding()}
