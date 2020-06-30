@@ -116,8 +116,6 @@ export default class Filter extends Component{
     createFilterChoices = (e) => {
         e.preventDefault();
         const value = e.target.value;
-        // filter inventory by: options = sku, description, location ; 
-        // filter orders by: options = company, sku, description, date_entered ;
         if (value === "sku") {
             this.setState({
                 filter_choice: value,
@@ -168,7 +166,7 @@ export default class Filter extends Component{
         e.preventDefault();
         if (this.state.data === 'inventory') {
             if (this.state.filter_choice === "sku") {
-                const inventory = this.context.inventory.filter(item => item.sku === Number(this.state.filter));
+                const inventory = this.context.inventory.filter(item => item.sku === this.state.filter);
                 this.props.handleUpdateInventory(inventory);        
             }
             if (this.state.filter_choice === "description") {
@@ -186,7 +184,7 @@ export default class Filter extends Component{
                 this.props.handleUpdateOrders(orders);        
             }
             if (this.state.filter_choice === "sku") {
-                const orders = this.context.past_orders.filter(item => item.sku === Number(this.state.filter));
+                const orders = this.context.past_orders.filter(item => item.sku === this.state.filter);
                 this.props.handleUpdateOrders(orders);        
             }
             if (this.state.filter_choice === "description") {
@@ -214,10 +212,10 @@ export default class Filter extends Component{
             filter: 'Choose one',
         })
         if (this.state.data === 'inventory') {
-            this.props.handleClearFilter(this.context.inventory)    
+            this.props.handleClearFilter();    
         }
         if (this.state.data === 'orders') {
-            this.props.handleClearFilter(this.context.past_orders)    
+            this.props.handleClearFilter();    
         }
     }
 

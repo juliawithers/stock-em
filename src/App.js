@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import STORE from './STORE';
 import CurrentInventory from './CurrentInventory/CurrentInventory';
 import CurrentSuppliers from './CurrentSuppliers/CurrentSuppliers';
 import CurrentCustomers from './CurrentCustomers/CurrentCustomers';
@@ -14,9 +13,8 @@ import './App.css'
 import Hamburger from './pictures/hamburger.png'
 import xOut from './pictures/x_out.png'
 import context from './context'
-// import config from './config'
-// withrouter
-// need to add user_id to all data submitted to the db
+import config from './config' 
+
 // create separate landing endpoint just for posterity sake
 
 export default class App extends Component {
@@ -40,7 +38,8 @@ export default class App extends Component {
       submitSupplierUpdate: () => { },
       submitCustomerUpdate: () => { },
       menu: '',
-      icon: ''
+      icon: '',
+      error: ''
     }
     this.hamburgerClick.bind(this)
     this.handleHamClick.bind(this)
@@ -48,95 +47,312 @@ export default class App extends Component {
 
   componentDidMount() {
     this.setState({
-      inventory: STORE.inventories[0].skus,
-      customers: STORE.customers[0].customers_data,
-      suppliers: STORE.suppliers[0].suppliers_data,
-      past_orders: STORE.past_orders[0].order_history,
-      skus: STORE.skus[0].skus,
-      user_id: STORE.users[0].id,
+      user_id: 1,
       menu: 'hide',
       icon: Hamburger
     })
+    this.getAllCustomers();
+    this.getAllInventory();
+    this.getAllSuppliers();
+    this.getAllSkus();
+    this.getAllPastOrders();
   }
-  // validation code here
+
+  getAllInventory=()=>{
+   
+    fetch(config.API_ENDPOINT+`/inventory/?user_id=${1}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then(inventory=>{
+        this.setState({
+          inventory: inventory
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  getAllCustomers=()=>{
+  
+    fetch(config.API_ENDPOINT+`/customers/?user_id=${1}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then(customers=>{
+        this.setState({
+          customers: customers
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  getAllSuppliers=()=>{
+    fetch(config.API_ENDPOINT+`/suppliers/?user_id=${1}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then(suppliers=>{
+        this.setState({
+          suppliers: suppliers
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  getAllPastOrders=()=>{
+    fetch(config.API_ENDPOINT+`/past-orders/?user_id=${1}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then(past_orders=>{
+        this.setState({
+          past_orders: past_orders
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  getAllSkus=()=>{
+    fetch(config.API_ENDPOINT+`/skus/?user_id=${1}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then(skus=>{
+        this.setState({
+          skus: skus
+        })
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
 
   submitSupplier = (object) => {
-    let ids = this.findMaxId(this.state.suppliers);
-    let id = ids + 1;
-    let newObject = {
-      id,
-      ...object
-    }
-    this.state.suppliers.push(newObject);
-    this.setState({
-      suppliers: this.state.suppliers
-    });
+    fetch(config.API_ENDPOINT+`/suppliers`, {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllSuppliers();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+
   }
 
   submitCustomer = (object) => {
-    let idc = this.findMaxId(this.state.customers);
-    let id = idc + 1;
-    let newObject = {
-      id,
-      ...object
-    }
-    this.state.customers.push(newObject);
-    this.setState({
-      customers: this.state.customers
-    });
+    fetch(config.API_ENDPOINT+`/customers`, {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllCustomers();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   submitSKUs = (object) => {
-    let idsku = this.findMaxId(this.state.skus);
-    let id = idsku + 1;
-    let newObject = {
-      id,
-      ...object
-    }
-    this.state.skus.push(newObject);
-    this.setState({
-      skus: this.state.skus
-    });
+    fetch(config.API_ENDPOINT+`/skus`, {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllSkus();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   submitCustomerPO = (object) => {
-    // handle the change in inventory
-    // submit customer PO to API
     this.updateInventory(object, 'customerPO');
   }
 
   submitSupplierPO = (object) => {
-    // handle the change in inventory
-    // submit customer PO to API
-    this.updateInventory(object, 'supplierPO');
+    this.updateInventory(object, 'supplierPO'); 
   }
 
   submitSupplierUpdate = (object) => {
-    const newSup = this.state.suppliers.filter(item => item.id !== object.id)
-    newSup.push(object)
-    this.setState({
-      suppliers: newSup
-    });
+    fetch(config.API_ENDPOINT+`/suppliers`, {
+      method: 'PATCH',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllSuppliers();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   submitCustomerUpdate = (object) => {
-    const newCust = this.state.customers.filter(item => item.id !== object.id)
-    newCust.push(object)
-    this.setState({
-      customers: newCust
-    });
+    fetch(config.API_ENDPOINT+`/customers`, {
+      method: 'PATCH',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllCustomers();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+
+  }
+
+  submitUpdatePastOrders=(object)=>{
+    console.log(object)
+    fetch(config.API_ENDPOINT+`/past-orders`, {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllPastOrders();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  submitUpdateInventory=(object)=>{
+    fetch(config.API_ENDPOINT+`/inventory`, {
+      method: 'PATCH',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllInventory();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+  }
+
+  submitAddInventory=(object)=>{
+    fetch(config.API_ENDPOINT+`/inventory`, {
+      method: 'POST',
+      body: JSON.stringify(object),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        this.getAllInventory();
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
   }
 
   updateInventory = (object, reason) => {
-    // need to delete items from inventory
-    // need to find the oldest item in the database and check the quantitiy.
+    console.log('updateInventory ran')
     let sku = object.sku;
-    // DELETE INVENTORY FROM PO
+
     if (reason === 'customerPO') {
-      let idc = this.findMaxId(this.state.past_orders);
-      let id = idc + 1;
+      console.log('if reason customerPO ran')
       let customerObj = {
-        id: id,
         user_id: this.state.user_id,
         company: object.company,
         sku: object.sku,
@@ -146,39 +362,36 @@ export default class App extends Component {
         sup_order: object.sup_order,
         date_entered: object.date_entered
       };
-      // we filter the inventory to the selected sku. 
-      let filteredInventory = this.state.inventory.filter(item => item.sku === sku);
-      // maybe put it in a queue
+
+      console.log(customerObj)
+      console.log(this.state.inventory)
+      let filteredInventory = this.state.inventory.filter(item => item.sku === sku.toString());
+      console.log(filteredInventory)
+
       const sortedInventory = filteredInventory.slice().sort((itemA, itemB) => new Date(itemA.date_entered) - new Date(itemB.date_entered));
+      console.log(sortedInventory)
+
 
       if (sortedInventory.length > 0) {
+        console.log('if ran')
         this.findOldestInventory(object, sortedInventory);
       }
-
-      // submit the customerPO object to the past orders history
-      this.state.past_orders.push(customerObj);
-      this.setState({
-        past_orders: this.state.past_orders,
-      });
+  
+      this.submitUpdatePastOrders(customerObj);      
     }
     else if (reason === 'supplierPO') {
-      // send to database for updating inventory.  
-      let ids = this.findMaxId(this.state.inventory);
-      let id = ids + 1;
       let supplierObj = {
-        id: id,
+        user_id: this.state.user_id,
         sku: object.sku,
         quantity: object.quantity,
         inv_description: object.inv_description,
         inv_location: object.inv_location,
         date_entered: object.date_entered
       };
-
-      let ido = this.findMaxId(this.state.past_orders);
-      let iD = ido + 1;
+  
+      this.submitAddInventory(supplierObj);
 
       let supObj = {
-        id: iD,
         user_id: this.state.user_id,
         company: object.company,
         sku: object.sku,
@@ -189,52 +402,33 @@ export default class App extends Component {
         date_entered: object.date_entered
       };
 
-      this.state.inventory.push(supplierObj);
-      this.state.past_orders.push(supObj);
-
-      this.setState({
-        inventory: this.state.inventory,
-        past_orders: this.state.past_orders
-      });
+      this.submitUpdatePastOrders(supObj);
     }
   }
 
-  findMaxId = (array) => {
-    let max = 0;
-    array.forEach(item => {
-      if (item.id > max) {
-        max = item.id
-      }
-    });
-    return max;
-  }
-
   findOldestInventory = (object, sortedInventory) => {
-
     let quantity = 0;
     let invArr = this.state.inventory;
     for (let i = 0; i < sortedInventory.length; i++) {
       let qty = sortedInventory[i].quantity
       if (qty > object.quantity) {
         quantity += qty;
-        // at this point send the id and qty to the update function for inventory. (to the database)
+        
         let id = sortedInventory[i].id;
         let diff = quantity - object.quantity;
 
-        let newInv = this.adjustQuantity(invArr, id, diff)
-
-        invArr = newInv
+        this.adjustQuantity(invArr, id, diff)
+        return
       }
       else if (qty <= object.quantity) {
         quantity += qty;
-        // at this point send the id to delete to the delete function. (to the database)
+        
         let workingArr = invArr;
         invArr = this.deleteInventory(workingArr, sortedInventory[i].id);
       }
     }
-    this.setState({
-      inventory: invArr
-    });
+
+    this.getAllInventory();
   }
 
   adjustQuantity = (inventory, id, diff) => {
@@ -250,16 +444,27 @@ export default class App extends Component {
       date_entered: item.date_entered
     };
 
-    let newInventoryList =
-      inventory.filter(function (el) {
-        return el.id !== id;
-      });
-
-    newInventoryList.push(newItem);
-    return newInventoryList;
+    this.submitUpdateInventory(newItem);
   }
 
   deleteInventory = (inventory, id) => {
+    fetch(config.API_ENDPOINT+`/inventory`, {
+      method: 'DELETE',
+      body: JSON.stringify({id: id}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .catch(error => {
+        this.setState({ error })
+      })
+      
     return inventory.filter((el) => {
       return el.id !== id;
     });
@@ -297,10 +502,6 @@ export default class App extends Component {
         <NavLink
           className="nav-link"
           to="/supplier-order">Supplier Order</NavLink>
-        {/* <button className="logout" onClick={this.handleLogout}>
-                      Logout
-            </button> */}
-
       </div>
     )
 
@@ -330,12 +531,6 @@ export default class App extends Component {
         icon: Hamburger
       })
     }
-  }
-
-  handleXClick() {
-    this.setState({
-      menu: 'hide'
-    })
   }
 
   createMainRoutes() {
@@ -386,11 +581,6 @@ export default class App extends Component {
           path="/supplier-order"
           component={SupplierOrder}
         />
-        {/* <Route
-                    exact
-                    path="/message"
-                    component={Message}
-                /> */}
       </>
     )
   }
@@ -399,6 +589,11 @@ export default class App extends Component {
     this.setState({
       click: true
     })
+    this.getAllCustomers();
+    this.getAllInventory();
+    this.getAllSuppliers();
+    this.getAllSkus();
+    this.getAllPastOrders();
   }
 
   createLanding() {
@@ -436,7 +631,6 @@ export default class App extends Component {
       user_id: this.state.user_id,
 
     };
-    // console.log(contextValue)
 
     let menu = this.state.menu === 'hide'
       ? <div></div>

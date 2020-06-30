@@ -17,7 +17,6 @@ class AddCustomer extends Component {
             message: '',
         }
     }
-    // validation code here
 
     checkUnique=()=>{
         let custCheck = 'unique';

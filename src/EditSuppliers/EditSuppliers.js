@@ -34,7 +34,6 @@ class EditSuppliers extends Component {
             message: ''
         })
     }
-    // validation code here
 
     createsupplierOptions=()=> {
         let options = this.context.suppliers;

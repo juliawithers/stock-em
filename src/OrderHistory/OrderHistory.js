@@ -25,13 +25,17 @@ export default class OrderHistory extends Component {
             const { company, sku, quantity, inv_description, cust_order, sup_order, date_entered } = lineItem;
 
             let dateArr = date_entered.split('-');
-            let date=[];
+            let date = [];
             date.push(dateArr[0])
-            if(dateArr[1].length === 1) {
-                date.push('0'+dateArr[1]) ;
+            if (dateArr[1].length === 1) {
+                date.push('0' + dateArr[1]);
+            } else {
+                date.push(dateArr[1])
             }
-            if(dateArr[2].length === 1) {
-                date.push('0'+dateArr[2]);
+            if (dateArr[2].length === 1) {
+                date.push('0' + dateArr[2]);
+            }else {
+                date.push(dateArr[2])
             }
             let fullDate = date.join('-');
 
@@ -56,19 +60,21 @@ export default class OrderHistory extends Component {
         this.updateDataToSort(orders)
     }
 
-    clearFilter = (past_orders) => {
+    clearFilter = () => {
         this.setState({
             filter_choice: 'Choose one',
             filter_options: 'Choose one',
             filter: '',
-            past_orders: past_orders
+            past_orders: this.context.past_orders,
+            sortOrders: this.context.past_orders
         })
     }
 
-    clearSort = (past_orders) => {
+    clearSort = () => {
         this.setState({
             sort_choice: 'Choose one',
-            past_orders: past_orders
+            past_orders: this.context.past_orders,
+            sortOrders: this.context.past_orders
         })
     }
 

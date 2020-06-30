@@ -30,9 +30,13 @@ class CurrentInventory extends Component {
             date.push(dateArr[0])
             if (dateArr[1].length === 1) {
                 date.push('0' + dateArr[1]);
+            } else {
+                date.push(dateArr[1])
             }
             if (dateArr[2].length === 1) {
                 date.push('0' + dateArr[2]);
+            }else {
+                date.push(dateArr[2])
             }
             let fullDate = date.join('-');
 
@@ -55,16 +59,18 @@ class CurrentInventory extends Component {
         this.updateDataToSort(inventory)
     }
 
-    clearFilter = (inventory) => {
+    clearFilter = () => {
         this.setState({
-            inventory: inventory
+            inventory: this.context.inventory,
+            sortInv: this.context.inventory
         })
         
     }
 
-    clearSort = (inventory) => {
+    clearSort = () => {
         this.setState({
-            inventory: inventory
+            inventory: this.context.inventory,
+            sortInv: this.context.inventory
         })
     }
 

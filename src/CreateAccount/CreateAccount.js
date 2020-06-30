@@ -3,8 +3,6 @@ import context from '../context';
 
 export default class CreateAccount extends Component {
 
-    // validation code here
-
     render() {
         return (
             <div className="component-div">

@@ -16,8 +16,7 @@ class AddSupplier extends Component {
             supplier_address: '',
         }
     }
-    // validation code here
-
+    
     checkUnique=()=>{
         let skuCheck = 'unique';
         this.context.suppliers.map(item => {

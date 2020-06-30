@@ -12,7 +12,7 @@ export default class AddSKU extends Component {
             message: ''
         }
     }
-    // validation code here
+
     componentDidMount(){
         this.setState({
             skus: this.context.skus
@@ -59,10 +59,13 @@ export default class AddSKU extends Component {
         const check = this.checkUnique();
         const required = this.checkRequired();
         if (num === true && check === 'unique' && required === true) {
+            let today = new Date();
+            let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             const skuObj = {
                 user_id: this.context.user_id,
-                sku: Number(this.state.sku),
-                inv_description: this.state.description
+                sku: this.state.sku,
+                inv_description: this.state.description,
+                date_entered: date
             };
 
             this.context.submitSKUs(skuObj); 

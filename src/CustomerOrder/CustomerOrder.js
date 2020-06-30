@@ -26,7 +26,6 @@ export default class CustomerOrder extends Component {
             skus: this.context.skus
         })
     }
-    // validation code here
 
     createCustomerOptions=()=> {
         let options = this.state.customers;
@@ -70,7 +69,7 @@ export default class CustomerOrder extends Component {
 
 
     checkSKU(){
-        let selectedSku = this.context.inventory.filter(item => item.sku === Number(this.state.sku))
+        let selectedSku = this.context.inventory.filter(item => item.sku === this.state.sku)
 
         let sum=0;
         selectedSku.forEach(item =>{
@@ -100,7 +99,6 @@ export default class CustomerOrder extends Component {
 
     handleSubmitCustomerPO = e => {
         e.preventDefault();
-
         const check = this.checkSKU();
         const required = this.checkRequired();
         if (check === false && required === true) {
@@ -116,11 +114,12 @@ export default class CustomerOrder extends Component {
                 company: this.state.customer,
                 sku: Number(this.state.sku),
                 quantity: Number(this.state.qty),
-                description: description,
+                inv_description: description,
                 cust_order: this.state.order,
                 sup_order: '',
                 date_entered: date
             }
+            console.log(customerPOobj)
             this.context.submitCustomerPO(customerPOobj);    
             this.setState({
                 message: 'Submission completed'
@@ -149,7 +148,7 @@ export default class CustomerOrder extends Component {
         }
         if (id === 'sku') {
             this.setState({
-                sku: Number(value),
+                sku: value,
             });
             this.showSelectedSKU(value)
         }
@@ -177,15 +176,15 @@ export default class CustomerOrder extends Component {
     }
 
     showSelectedSKU(value){
-        let selectedSku = this.context.inventory.filter(item => item.sku === Number(value))
+        let selectedSku = this.context.inventory.filter(item => item.sku === value)
        
         let sum=0;
         selectedSku.forEach(item =>{
-            sum += item.quantity;
+            sum += Number(item.quantity);
         })
 
         this.setState({
-            sku_message: `SKU: ${value}, Quantity: ${sum}`
+            sku_message: `SKU: ${value}, Quantity: ${sum}, Description: ${selectedSku[0].inv_description}`
         })
     }
 

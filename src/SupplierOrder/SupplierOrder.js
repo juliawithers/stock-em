@@ -28,7 +28,6 @@ export default class SupplierOrder extends Component {
             skus: this.context.skus
         })
     }
-    // validation code here
 
     createSupplierOptions() {
         let options = this.context.suppliers;
@@ -121,7 +120,7 @@ export default class SupplierOrder extends Component {
         }
         if (id === 'sku') {
             this.setState({
-                sku: Number(value)
+                sku: value
             });
             this.showSelectedSKU(value)
         }
@@ -153,15 +152,15 @@ export default class SupplierOrder extends Component {
     }
 
     showSelectedSKU(value){
-        let selectedSku = this.context.inventory.filter(item => item.sku === Number(value))
-       
+        let selectedSku = this.context.inventory.filter(item => item.sku === value)
+
         let sum=0;
         selectedSku.forEach(item =>{
-            sum += item.quantity;
+            sum += Number(item.quantity);
         })
 
         this.setState({
-            sku_message: `SKU: ${value}, Quantity: ${sum}`
+            sku_message: `SKU: ${value}, Quantity: ${sum}, Quantity: ${sum}, Description: ${selectedSku[0].inv_description}`
         })
     }
 

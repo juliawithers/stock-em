@@ -16,7 +16,7 @@ export default class CurrentCustomers extends Component {
     }
 
     createSupplierTables() {
-        return this.state.customers.map((lineItem, i) => {
+        return this.context.customers.map((lineItem, i) => {
             const { company, contact, phone, email, bill_address, ship_address } = lineItem;
             return (
                 <tr key={i}>

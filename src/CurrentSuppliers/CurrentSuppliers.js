@@ -15,10 +15,9 @@ export default class CustomerSuppliers extends Component {
             suppliers: this.context.suppliers
         })
     }
-
-    // create table with data
+    
     createSupplierTables() {
-        return this.state.suppliers.map((lineItem, i) => {
+        return this.context.suppliers.map((lineItem, i) => {
             const { company, contact, phone, email, sup_address } = lineItem;
             return (
                 <tr key={i}>

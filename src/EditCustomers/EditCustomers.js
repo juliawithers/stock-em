@@ -28,7 +28,6 @@ class EditCustomers extends Component {
             skus: this.context.skus
         })
     }
-    // validation code here
 
     createCustomerOptions=()=> {
         let options = this.context.customers;

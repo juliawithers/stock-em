@@ -59,13 +59,13 @@ export default class Sort extends Component {
     clear = (e) => {
         e.preventDefault();
         this.setState({
-            sort_choice: 'Choose one'
+            sort_choice: 'Choose one',
         })
         if (this.state.ident === 'inventory') {
-            this.props.handleClearSort(this.context.inventory)    
+            this.props.handleClearSort();    
         }
         if (this.state.ident === 'orders') {
-            this.props.handleClearSort(this.context.past_orders)    
+            this.props.handleClearSort();    
         }
         
     }
