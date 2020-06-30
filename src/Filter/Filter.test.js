@@ -11,7 +11,7 @@ describe(`Filter component`, () => {
         const div = document.createElement('div');
         ReactDOM.render(
             <BrowserRouter>
-                <Filter />
+                <Filter options={['company','sku','description','date_entered']} data={'orders'}/>
             </BrowserRouter>
             ,
             div
