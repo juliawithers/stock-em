@@ -13,11 +13,11 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
     "react": "^16.13.1",
-    "react-data-grid": "^7.0.0-canary.16",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "reactable": "^1.1.0"
+    "react-table": "^7.2.2",
+    "reactable": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

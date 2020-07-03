@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import context from '../context';
 import Filter from '../Filter/Filter';
 import { Table, Thead, Tr, Td, Th } from 'reactable';
+import { useTable } from 'react-table';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
 // import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
@@ -105,7 +106,59 @@ export default class OrderHistory extends Component {
         })
     }
 
+    createReactTable=()=>{
+        const data = React.useMemo(()=>this.context.past_orders);
+        const columns = React.useMemo(()=>[
+            {
+                Header: 'Company',
+                accessor: 'company'
+            },
+            {
+                Header: 'SKU',
+                accessor: 'sku'
+            },
+            {
+                Header: 'Quantity',
+                accessor: 'quantity'
+            },
+            {
+                Header: 'Customer PO',
+                accessor: 'cust_order'
+            },
+            {
+                Header: 'Supplier PO',
+                accessor: 'sup_order'
+            },
+            {
+                Header: 'Date',
+                accessor: 'date_entered'
+            },
+        ]);
+
+        const {
+            getTableProps,
+            getTableBodyProps,
+            headerGroups,
+            rows,
+            prepareRow,
+        } = useTable({columns, data})
+
+        this.setState({
+            data: data,
+            columns: columns,
+            getTableProps,
+            getTableBodyProps,
+            headerGroups,
+            rows,
+            prepareRow,
+        })
+
+    }
+
     render() {
+        this.createReactTable();
+
+
         return (
             <div className="component-div">
                 <h2>Order History</h2>
@@ -129,6 +182,33 @@ export default class OrderHistory extends Component {
                             </Thead>
                             {this.createOrderTables()}
                         </Table>
+
+                        
+                        <table {...this.state.getTableProps()}>
+                            <thead>
+                            {this.state.headerGroups.map(headerGroup => (
+                                <tr {...headerGroup.getHeaderGroupProps()}>
+                                {headerGroup.headers.map(column => (
+                                    <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                                ))}
+                                </tr>
+                            ))}
+                            </thead>
+                            <tbody {...this.state.getTableBodyProps()}>
+                            {this.state.rows.map(row => {
+                                this.state.prepareRow(row)
+                                return (
+                                <tr {...row.getRowProps()}>
+                                    {row.cells.map(cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                                    })}
+                                </tr>
+                                )
+                            })}
+                            </tbody>
+                        </table>
+
+
 
                         <table className="small-tables">
                             <tbody>
