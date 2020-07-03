@@ -11,39 +11,49 @@ __Landing Page__
 ![Landing Page for App](/src/pictures/StockEmLanding.PNG)
 
 __Inventory__
+
 ![Large Screen View of Inventory](/src/pictures/StockEmLargeInventory.PNG)
 
 ![Small Screen View of Inventory](/src/pictures/StockEmSmallInventory.PNG)
 
 __Suppliers__
+
 ![Large Screen View of Suppliers](/src/pictures/StockEmLargeSuppliers.PNG)
 
 ![Small Screen View of Suppliers](/src/pictures/StockEmSmallSuppliers.PNG)
 
 __Customers__
+
 ![Large Screen View of Customers](/src/pictures/StockEmLargeCustomers.PNG)
 
 ![Small Screen View of Customers](/src/pictures/StockEmSmallCustomers.PNG)
 
 __Order History__
+
 ![Large Screen View of Order History](/src/pictures/StockEmLargePastOrders.PNG)
 
 ![Small Screen View of OrderHistory](/src/pictures/StockEmSmallPastOrders.PNG)
 
 __Add & Edit Customers__
+
 ![Add and Edit Customers Page](/src/pictures/StockEmAddEditCustomerInfo.PNG)
 
 __Add & Edit Suppliers__
+
 ![Add and Edit Suppliers Page](/src/pictures/StockEmAddEditSupplierInfo.PNG)
 
 __Add SKUs__
+
 ![Add and Edit SKU Page](/src/pictures/StockEmAddSKUs.PNG)
 
 __Customer Order__
+
 ![Create Customer PO](/src/pictures/StockEmCustomerPO.PNG)
 
 __Supplier Order__
+
 ![Create Supplier PO](/src/pictures/StockEmSupplierPO.PNG)
+
 
 ## Technology Used
 React, HTML, Javascript, CSS, NodeJs, PostgreSQL
