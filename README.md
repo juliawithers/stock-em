@@ -1,68 +1,355 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Stock'Em!
 
-## Available Scripts
+Link to live app: https://stock-em.vercel.app/
 
-In the project directory, you can run:
+## Description
+Stock'Em! is an app specifically for tracking inventory coming into and out of a business. Add SKUs, Customers, and Suppliers. Edit your customer and supplier information as necessary. Submit Customer and Supplier PO's. Inventory will automatically be updated from these PO's. View all past orders, whether for a customer or a supplier.
 
-### `npm start`
+## Screenshots
+__Landing Page__
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![Landing Page for App](/src/pictures/StockEmLanding.PNG)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+__Inventory__
+![Large Screen View of Inventory](/src/pictures/StockEmLargeInventory.PNG)
 
-### `npm test`
+![Small Screen View of Inventory](/src/pictures/StockEmSmallInventory.PNG)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+__Suppliers__
+![Large Screen View of Suppliers](/src/pictures/StockEmLargeSuppliers.PNG)
 
-### `npm run build`
+![Small Screen View of Suppliers](/src/pictures/StockEmSmallSuppliers.PNG)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+__Customers__
+![Large Screen View of Customers](/src/pictures/StockEmLargeCustomers.PNG)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+![Small Screen View of Customers](/src/pictures/StockEmSmallCustomers.PNG)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+__Order History__
+![Large Screen View of Order History](/src/pictures/StockEmLargePastOrders.PNG)
 
-### `npm run eject`
+![Small Screen View of OrderHistory](/src/pictures/StockEmSmallPastOrders.PNG)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+__Add & Edit Customers__
+![Add and Edit Customers Page](/src/pictures/StockEmAddEditCustomerInfo.PNG)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+__Add & Edit Suppliers__
+![Add and Edit Suppliers Page](/src/pictures/StockEmAddEditSupplierInfo.PNG)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+__Add SKUs__
+![Add and Edit SKU Page](/src/pictures/StockEmAddSKUs.PNG)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+__Customer Order__
+![Create Customer PO](/src/pictures/StockEmCustomerPO.PNG)
 
-## Learn More
+__Supplier Order__
+![Create Supplier PO](/src/pictures/StockEmSupplierPO.PNG)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Technology Used
+React, HTML, Javascript, CSS, NodeJs, PostgreSQL
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## API documentation/shcemas
+Please see the endpoints and schemas below:
+Github for API: `https://github.com/juliawithers/stock-em-api`
 
-### Code Splitting
+```
+`https://stock-em-api.herokuapp.com/api/stock-em`
+/inventory
+/suppliers
+/customers
+/past_orders
+/skus
+```
+### /inventory 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+__GET__: 
+request query: 
+```
+    `https://stock-em-api.herokuapp.com/api/stock-em/inventory/?user_id=${user_id}`
+```
+returns: 
+```
+    [{
+        "id": 1,
+        "sku": 1234,
+        "quantity": 25,
+        "inv_description": "capacitor",
+        "inv_location": "M01",
+        "date_entered": "2020-5-5"
+    },...]
+```
+__POST__: 
 
-### Analyzing the Bundle Size
+body:  
+```
+    {
+        "sku": 1234,
+        "quantity": 25,
+        "inv_description": "capacitor",
+        "inv_location": "M01",
+        "date_entered": "2020-5-5"
+    }
+```
+returns: 
+```
+    {
+        "id": "newid",
+        "sku": 1234,
+        "quantity": 25,
+        "inv_description": "capacitor",
+        "inv_location": "M01",
+        "date_entered": "2020-5-5"
+    }
+```
+__DELETE__:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+body: 
+```
+    {
+        "id": the inventory id
+    }
+```
+returns:
+```
+    {
+        "id": deleted id
+    }
+```
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-### Advanced Configuration
+### /suppliers
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+__GET__:
 
-### Deployment
+query params:
+```
+    `https://stock-em-api.herokuapp.com/api/stock-em/suppliers/?user_id=${user_id}`
+```
+returns:
+```
+    [
+        {
+            "id": 1,
+            "company": "Company 1",
+            "contact": "John Doe",
+            "phone": "111-111-1112",
+            "email": "111222@gmail.com",
+            "sup_address": "1234 Main St., Nowhere USA"
+        },...
+    ]
+```
+__POST__: 
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+body:  
+```
+    {
+        "company": "Company 1",
+        "contact": "John Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "sup_address": "1234 Main St., Nowhere USA"
+    }
+```
+returns: 
+```
+    {
+        "id": new id,
+        "company": "Company 1",
+        "contact": "John Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "sup_address": "1234 Main St., Nowhere USA"
+    }
+```
+__PATCH__:
 
-### `npm run build` fails to minify
+body:  
+```
+    {
+        "id": id,
+        "company": "UPDATED COMPANY",
+        "contact": "John Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "sup_address": "1234 Main St., Nowhere USA"
+    }
+```
+returns: 
+```
+    {
+        "id": id,
+        "company": "UPDATED COMPANY",
+        "contact": "John Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "sup_address": "1234 Main St., Nowhere USA"
+    }
+```
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### /customers
+
+__GET__:
+
+query params:
+```
+    `https://stock-em-api.herokuapp.com/api/stock-em/customers/?user_id=${user_id}`
+```
+
+returns: 
+```
+   [
+       {
+            "id": 1,
+            "company": "Company 1",
+            "contact": "Jane Doe",
+            "phone": "111-111-1112",
+            "email": "111222@gmail.com",
+            "bill_address": "1234 Main St., Nowhere USA",
+            "ship_address": "1234 Main St., Nowhere USA"
+        },...
+    ]
+```
+__POST__ :
+
+body: 
+```
+    {
+        "company": "Company 1",
+        "contact": "Jane Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "bill_address": "1234 Main St., Nowhere USA",
+        "ship_address": "1234 Main St., Nowhere USA"
+    }
+```
+returns: 
+```
+    {
+        "id": new id,
+        "company": "Company 1",
+        "contact": "Jane Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "bill_address": "1234 Main St., Nowhere USA",
+        "ship_address": "1234 Main St., Nowhere USA"
+    }
+```
+__PATCH__:
+
+body: 
+```
+    {
+        "id": 1,
+        "company": "UPDATED CUSTOMER COMPANY",
+        "contact": "Jane Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "bill_address": "1234 Main St., Nowhere USA",
+        "ship_address": "1234 Main St., Nowhere USA"
+    }
+```
+returns: 
+```
+    {
+        "id": 1,
+        "company": "UPDATED CUSTOMER COMPANY",
+        "contact": "Jane Doe",
+        "phone": "111-111-1112",
+        "email": "111222@gmail.com",
+        "bill_address": "1234 Main St., Nowhere USA",
+        "ship_address": "1234 Main St., Nowhere USA"
+    }
+```
+
+### /past_orders
+__GET__:
+
+query params:
+```
+    `https://stock-em-api.herokuapp.com/api/stock-em/past-orders/?user_id=${user_id}`
+```
+
+returns: 
+```
+   [
+       {
+            "id": 1,
+            "company":"Some Company",
+            "sku": 1234,
+            "quantity": 100,
+            "inv_description": "capacitor",
+            "cust_order": "PO123",
+            "sup_order": "",
+            "date_entered": "2020-1-1"
+        },...
+    ]
+```
+__POST__:
+
+body: 
+```
+    {
+        "company":"Some Company",
+        "sku": 1234,
+        "quantity": 100,
+        "inv_description": "capacitor",
+        "cust_order": "PO123",
+        "sup_order": "",
+        "date_entered": "2020-1-1"
+    }
+```
+returns: 
+```
+    {
+        "id": new id,
+        "company":"Some Company",
+        "sku": 1234,
+        "quantity": 100,
+        "inv_description": "capacitor",
+        "cust_order": "PO123",
+        "sup_order": "",
+        "date_entered": "2020-1-1"
+    }
+```
+
+### /skus
+
+__GET__:
+
+query params:
+```
+    `https://stock-em-api.herokuapp.com/api/stock-em/skus/?user_id=${user_id}`
+```
+
+returns: 
+```
+   [
+       {
+            "id": 1,
+            "sku": 1234,
+            "inv_description": "capacitor",
+            "date_entered": "2020-5-5"
+        },...
+    ]
+```
+__POST__:
+
+body: 
+```
+   {
+        "sku": 1234,
+        "inv_description": "capacitor",
+        "date_entered": "2020-5-5"
+    }
+```
+returns: 
+```
+    {
+        "id": new id,
+        "sku": 1234,
+        "inv_description": "capacitor",
+        "date_entered": "2020-5-5"
+    },
+```
+

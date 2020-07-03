@@ -503,7 +503,6 @@ export default class App extends Component {
           to="/supplier-order">Supplier Order</NavLink>
       </div>
     )
-
   }
 
   menuClick=()=>{
@@ -603,8 +602,19 @@ export default class App extends Component {
         <div className="landing">
           <h2>Landing Page</h2>
           <section>
-            <p>This app is intendend to help users track their inventory, place orders for customers, and place orders to
-                suppliers to inflate inventory when it is low</p>
+            <p>This app is intendend to help users track their inventory, place orders for customers, and place representative orders to suppliers to inflate inventory when it is low</p>
+            <p>Things to do with this app:</p>
+            <ul className="ul">
+              <li>View Current Inventory</li>
+              <li>View Current Customers</li>
+              <li>View Current Suppliers</li>
+              <li>View Current Order History - this shows both customer and supplier orders</li>
+              <li>Add and Edit Customers</li>
+              <li>Add and Edit Suppliers</li>
+              <li>Add SKUs</li>
+              <li>Enter Customer Orders</li>
+              <li>Enter Supplier Orders</li>
+            </ul>
             <p>Please use the link below to enter the inventory site for SomeCompany Inc.</p>
           </section>
           <button className="enter-button" onClick={this.handleClick}><Link to='/inventory'>Enter</Link></button>
