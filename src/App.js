@@ -9,11 +9,12 @@ import AddCustomer from './AddCustomer/AddCustomer';
 import AddSKU from './AddSKU/AddSKU';
 import AddSupplier from './AddSupplier/AddSupplier';
 import { Route, Link, NavLink } from 'react-router-dom';
-import './App.css'
-import Hamburger from './pictures/hamburger.png'
-import xOut from './pictures/x_out.png'
-import context from './context'
-import config from './config' 
+import './App.css';
+import Hamburger from './pictures/hamburger.png';
+import xOut from './pictures/x_out.png';
+import context from './context';
+import config from './config';
+
 
 export default class App extends Component {
 
@@ -465,30 +466,39 @@ export default class App extends Component {
       <div className="navigation">
 
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/inventory">Inventory</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/suppliers">Suppliers</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/customers">Customers</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/order-history">Order History</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/add-customer">Add & Edit Customers</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/add-supplier">Add & Edit Suppliers</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/add-SKU">Add SKUs</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/customer-order">Customer Order</NavLink>
         <NavLink
+          onClick = {this.menuClick}
           className="nav-link"
           to="/supplier-order">Supplier Order</NavLink>
       </div>
@@ -496,6 +506,13 @@ export default class App extends Component {
 
   }
 
+  menuClick=()=>{
+    this.setState({
+      menu: 'hide',
+      icon: Hamburger
+    })
+  }
+ 
   hamburgerClick = () => {
     if (this.state.click === true) {
       return (
@@ -569,7 +586,7 @@ export default class App extends Component {
           exact
           path="/supplier-order"
           component={SupplierOrder}
-        />
+        />  
       </>
     )
   }
@@ -578,11 +595,6 @@ export default class App extends Component {
     this.setState({
       click: true
     })
-    // this.getAllCustomers();
-    // this.getAllInventory();
-    // this.getAllSuppliers();
-    // this.getAllSkus();
-    // this.getAllPastOrders();
   }
 
   createLanding() {

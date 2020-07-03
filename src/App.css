@@ -78,7 +78,6 @@ table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
   width: 100%;
-
 }
 
 .component-div {
@@ -150,24 +149,6 @@ form{
   margin-bottom: 5px;
 }
 
-.sort>select,label {
-  margin-top: 3px;
-  margin-bottom: 5px;
-}
-
-.sort-div {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-.unsort {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
 button{
   font-family: arial, sans-serif;
   text-align: center;
@@ -185,21 +166,6 @@ input, select, button{
 .enter-button {
   margin-right: auto;
   margin-left: auto;
-}
-
-.scrolling-wrapper {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-  padding-bottom: 10px;
-}
-
-table {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  font-size: 12px;
-
 }
 
 tbody {
@@ -220,6 +186,39 @@ h2{
   font-weight: 500;
 }
 
+.big-table {
+  display: none;
+}
+
+.reactable-header-sortable:hover {
+  cursor: pointer;
+}
+
+.reactable-page-button, .reactable-current-page, .reactable-next-page, .reactable-previous-page{
+  text-align: center;
+  margin-left: 10px;
+  font-family: arial, sans-serif;
+}
+
+.small-tables {
+  font-size: 12px;
+}
+
+.sort-text {
+  display: none;
+}
+
+.sort-text-small {
+  display: block;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  text-align: center;
+}
+
 @media screen and (min-width: 320px) {
   body{
       padding-left: 30px;
@@ -229,6 +228,26 @@ h2{
   .navigation{
     flex-direction: row;
     flex-wrap: wrap;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .big-table {
+    display: table;
+    max-width: 600px;
+    font-size: 12px;
+  }
+
+  .small-tables {
+    display: none;
+  }
+
+  .sort-text {
+    display: block;
+  }
+
+  .sort-text-small {
+    display: none;
   }
 }
 
@@ -311,35 +330,8 @@ h2{
     margin-right: 5px;
   }
 
-  .sort{
-    display: flex;
-    flex-direction: row;
-    line-height: 2;
-  }
-
-  .sort>button{
-    line-height: 2;
-    display: block;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-top: 5px;
-  }
-
-  .sort>select,label {
-    margin-left: 3px;
-    margin-right: 5px;
-  }
-
-  .sort-div {
-    display: flex;
-    flex-direction: row;
-    margin-top: 10px;
-    line-height: 2;
-  }
-
-  .unsort {
-    margin-left: 5px;
-    margin-right: 5px;
+  .big-table {
+    max-width: 800px;
   }
 }
 

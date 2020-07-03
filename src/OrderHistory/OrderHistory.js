@@ -1,7 +1,10 @@
-import React, { Component }  from 'react';
+import React, { Component } from 'react';
 import context from '../context';
 import Filter from '../Filter/Filter';
-import Sort from '../Sort/Sort';
+import { Table, Thead, Tr, Td, Th } from 'reactable';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faAngleDoubleDown } from '@fortawesome/free-solid-svg-icons';
+// import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 
 export default class OrderHistory extends Component {
     static contextType = context;
@@ -9,18 +12,16 @@ export default class OrderHistory extends Component {
         super(props);
         this.state = {
             past_orders: [],
-            sortOrders: []
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setState({
-            past_orders: this.context.past_orders,
-            sortOrders: this.context.past_orders
+            past_orders: this.context.past_orders
         })
     }
 
-    createSupplierTables() {
+    createOrderTables() {
         return this.state.past_orders.map((lineItem, i) => {
             const { company, sku, quantity, inv_description, cust_order, sup_order, date_entered } = lineItem;
 
@@ -34,30 +35,65 @@ export default class OrderHistory extends Component {
             }
             if (dateArr[2].length === 1) {
                 date.push('0' + dateArr[2]);
-            }else {
+            } else {
+                date.push(dateArr[2])
+            }
+            let fullDate = date.join('-');
+
+            return (
+                <Tr key={i}>
+                    <Td column="Company" value={company}>{company}</Td>
+                    <Td column="SKU" value={sku}>{sku}</Td>
+                    <Td column="Quantity" value={quantity} >{quantity}</Td>
+                    <Td column="Description" value={inv_description}>{inv_description}</Td>
+                    <Td column="Customer PO" value={cust_order}>{cust_order}</Td>
+                    <Td column="Supplier PO" value={sup_order}>{sup_order}</Td>
+                    <Td column="Date Entered" value={fullDate}>{fullDate}</Td>
+                </Tr>
+            )
+        })
+    }
+
+    createSmallOrderTable = () => {
+        return this.state.past_orders.map((lineItem, i) => {
+            const { company, sku, quantity, inv_description, cust_order, sup_order, date_entered } = lineItem;
+
+            let dateArr = date_entered.split('-');
+            let date = [];
+            date.push(dateArr[0])
+            if (dateArr[1].length === 1) {
+                date.push('0' + dateArr[1]);
+            } else {
+                date.push(dateArr[1])
+            }
+            if (dateArr[2].length === 1) {
+                date.push('0' + dateArr[2]);
+            } else {
                 date.push(dateArr[2])
             }
             let fullDate = date.join('-');
 
             return (
                 <tr key={i}>
-                    <td>{company}</td>
-                    <td>{sku}</td>
-                    <td>{quantity}</td>
-                    <td>{inv_description}</td>
-                    <td>{cust_order}</td>
-                    <td>{sup_order}</td>
-                    <td>{fullDate}</td>
+                    <td column="Data">
+                        <p value={company}>Company: {company}</p>
+                        <p value={sku}>SKU: {sku}</p>
+                        <p value={quantity} >{quantity}</p>
+                        <p value={inv_description}>Description: {inv_description}</p>
+                        <p value={quantity}>Quantity: {quantity}</p>
+                        <p value={cust_order}> Customer PO: {cust_order}</p>
+                        <p value={sup_order}>Supplier PO:                  {sup_order}</p>
+                        <p value={fullDate}>Date Entered: {fullDate}</p>
+                    </td>
                 </tr>
             )
         })
     }
 
-    updateOrders=(orders)=>{
+    updateOrders = (orders) => {
         this.setState({
             past_orders: orders
         })
-        this.updateDataToSort(orders)
     }
 
     clearFilter = () => {
@@ -66,21 +102,6 @@ export default class OrderHistory extends Component {
             filter_options: 'Choose one',
             filter: '',
             past_orders: this.context.past_orders,
-            sortOrders: this.context.past_orders
-        })
-    }
-
-    clearSort = () => {
-        this.setState({
-            sort_choice: 'Choose one',
-            past_orders: this.context.past_orders,
-            sortOrders: this.context.past_orders
-        })
-    }
-
-    updateDataToSort=(data)=>{
-        this.setState({
-            sortOrders: data
         })
     }
 
@@ -90,24 +111,34 @@ export default class OrderHistory extends Component {
                 <h2>Order History</h2>
                 <p> Table of past orders: </p>
                 <div className="options">
-                    <Filter options={['company','sku','description','date_entered']} data={'orders'} handleUpdateOrders={this.updateOrders} handleClearFilter={this.clearFilter}/>
-                    <Sort data={this.state.sortOrders} ident='orders' handleUpdateFunction={this.updateOrders} handleClearSort={this.clearSort}/>
+                    <Filter options={['company', 'sku', 'description', 'date_entered']} data={'orders'} handleUpdateOrders={this.updateOrders} handleClearFilter={this.clearFilter} />
                 </div>
                 <div className="table">
-                    <table className="scrolling-wrapper">
-                        <tbody>
-                            <tr>
-                            <th>Company</th>
-                            <th>SKU</th>
-                            <th>Quantity</th>
-                            <th>Description</th>
-                            <th>Customer PO</th>
-                            <th>Supplier PO</th>
-                            <th>Date Entered</th>
-                            </tr>
-                            {this.createSupplierTables()}    
-                        </tbody>
-                    </table>
+                    <p className="sort-text">*Sort by clicking column headers</p>
+                    <p className="sort-text-small">*No sort capabilities with condensed table</p>
+                    <div className="table-div">
+                        <Table className="big-table" itemsPerPage={10} sortable={true} defaultSort={{ column: 'Date Entered', direction: 'desc' }} paginationtype={'simple'}>
+                            <Thead className=".rt-head">
+                                <Th column="Company" className=".rt-th">Company</Th>
+                                <Th column="SKU" className=".rt-th">SKU</Th>
+                                <Th column="Quantity" className=".rt-th">Quantity</Th>
+                                <Th column="Description" className=".rt-th">Description</Th>
+                                <Th column="Customer PO" className=".rt-th">Customer PO</Th>
+                                <Th column="Supplier PO" className=".rt-th">Supplier PO</Th>
+                                <Th column="Date Entered" className=".rt-th">Date Entered</Th>
+                            </Thead>
+                            {this.createOrderTables()}
+                        </Table>
+
+                        <table className="small-tables">
+                            <tbody>
+                                <tr>
+                                    <th>Order History</th>
+                                </tr>
+                                {this.createSmallOrderTable()}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         )

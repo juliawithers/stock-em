@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { Table, Thead, Tr, Td, Th } from 'reactable';
 import context from '../context';
 import Filter from '../Filter/Filter';
-import Sort from '../Sort/Sort';
 
 class CurrentInventory extends Component {
     static contextType = context;
@@ -16,12 +16,11 @@ class CurrentInventory extends Component {
 
     componentDidMount() {
         this.setState({
-            inventory: this.context.inventory,
-            sortInv: this.context.inventory
+            inventory: this.context.inventory
         })
     }
 
-    createInventoryTables=()=> {
+    createInventoryTables = () => {
         return this.state.inventory.map((lineItem, i) => {
             const { id, sku, quantity, inv_description, inv_location, date_entered } = lineItem;
 
@@ -35,49 +34,67 @@ class CurrentInventory extends Component {
             }
             if (dateArr[2].length === 1) {
                 date.push('0' + dateArr[2]);
-            }else {
+            } else {
+                date.push(dateArr[2])
+            }
+            let fullDate = date.join('-');
+
+            return (
+                <Tr key={id}>
+                    <Td column="SKU" value={sku}>{sku}</Td>
+                    <Td column="Quantity" value={quantity}>{quantity}</Td>
+                    <Td column="Description" value={inv_description}>{inv_description}</Td>
+                    <Td column="Location" value={inv_location}>{inv_location}</Td>
+                    <Td column="Date Received" value={fullDate}>{fullDate}</Td>
+                </Tr>
+            )
+        })
+    }
+
+    createSmallInventoryTable = () => {
+        return this.state.inventory.map((lineItem, i) => {
+            const { id, sku, quantity, inv_description, inv_location, date_entered } = lineItem;
+
+            let dateArr = date_entered.split('-');
+            let date = [];
+            date.push(dateArr[0])
+            if (dateArr[1].length === 1) {
+                date.push('0' + dateArr[1]);
+            } else {
+                date.push(dateArr[1])
+            }
+            if (dateArr[2].length === 1) {
+                date.push('0' + dateArr[2]);
+            } else {
                 date.push(dateArr[2])
             }
             let fullDate = date.join('-');
 
             return (
                 <tr key={id}>
-                    <td>{sku}</td>
-                    <td>{quantity}</td>
-                    <td>{inv_description}</td>
-                    <td>{inv_location}</td>
-                    <td>{fullDate}</td>
+                    <td>
+                        <p value={sku}>SKU: {sku}</p>
+                        <p value={quantity}>Quantity: {quantity}</p>
+                        <p value={inv_description}>Description: {inv_description}</p>
+                        <p value={inv_location}>Location{inv_location}</p>
+                        <p value={fullDate}>Date Received: {fullDate}</p>
+                    </td>
                 </tr>
             )
         })
     }
 
-    updateInventory=(inventory)=>{
+    updateInventory = (inventory) => {
         this.setState({
             inventory: inventory
         })
-        this.updateDataToSort(inventory)
     }
 
     clearFilter = () => {
         this.setState({
-            inventory: this.context.inventory,
-            sortInv: this.context.inventory
+            inventory: this.context.inventory
         })
-        
-    }
 
-    clearSort = () => {
-        this.setState({
-            inventory: this.context.inventory,
-            sortInv: this.context.inventory
-        })
-    }
-
-    updateDataToSort=(data)=>{
-        this.setState({
-            sortInv: data
-        })
     }
 
     render() {
@@ -87,22 +104,28 @@ class CurrentInventory extends Component {
                 <h2>Current Inventory Page</h2>
                 <p> Table of current Inventory: </p>
                 <div className="options">
-                    <Filter options={['sku','description','location']} data={'inventory'} handleUpdateInventory={this.updateInventory} handleClearFilter={this.clearFilter}/>
-                    <Sort data={this.state.sortInv} ident='inventory' handleUpdateFunction={this.updateInventory} handleClearSort={this.clearSort}/>
+                    <Filter options={['sku', 'description', 'location']} data={'inventory'} handleUpdateInventory={this.updateInventory} handleClearFilter={this.clearFilter} />
                 </div>
                 <div className="table">
-                    <table className="scrolling-wrapper">
+                    <p className="sort-text">*Sort by clicking column headers</p>
+                    <p className="sort-text-small">*No sort capabilities with condensed table</p>
+                    <Table className="big-table" itemsPerPage={10} sortable={true} defaultSort={{ column: 'Date Received', direction: 'desc' }} paginationtype={'simple'}>
+                        <Thead className=".rt-head">
+                            <Th column="SKU" className=".rt-th">SKU</Th>
+                            <Th column="Quantity" className=".rt-th">Quantity</Th>
+                            <Th column="Description" className=".rt-th">Description</Th>
+                            <Th column="Location" className=".rt-th">Location</Th>
+                            <Th column="Date Received" className=".rt-th">Date Received (ymd)</Th>
+                        </Thead>
+                        {this.createInventoryTables()}
+                    </Table>
+                    <table className="small-tables">
                         <tbody>
                             <tr>
-                                <th>SKU</th>
-                                <th>Quantity</th>
-                                <th>Description</th>
-                                <th>Location</th>
-                                <th>Date Received (ymd)</th>
+                                <th>Current Inventory</th>
                             </tr>
-                            {this.createInventoryTables()}
+                            {this.createSmallInventoryTable()}
                         </tbody>
-
                     </table>
                 </div>
             </div>
