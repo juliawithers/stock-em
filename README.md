@@ -8,42 +8,42 @@ Stock'Em! is an app specifically for tracking inventory coming into and out of a
 ## Screenshots
 __Landing Page__
 
-![Landing Page for App](/src/pictures/StockEmLanding.PNG){:width=300px}
+![Landing Page for App](/src/pictures/StockEmLanding.PNG){:width="300px"}
 
 __Inventory__
-![Large Screen View of Inventory](/src/pictures/StockEmLargeInventory.PNG){:width=300px}
+![Large Screen View of Inventory](/src/pictures/StockEmLargeInventory.PNG){:width=""300px""}
 
-![Small Screen View of Inventory](/src/pictures/StockEmSmallInventory.PNG){:width=100px}
+![Small Screen View of Inventory](/src/pictures/StockEmSmallInventory.PNG){:width="100px"}
 
 __Suppliers__
-![Large Screen View of Suppliers](/src/pictures/StockEmLargeSuppliers.PNG){:width=300px}
+![Large Screen View of Suppliers](/src/pictures/StockEmLargeSuppliers.PNG){:width="300px"}
 
-![Small Screen View of Suppliers](/src/pictures/StockEmSmallSuppliers.PNG){:width=100px}
+![Small Screen View of Suppliers](/src/pictures/StockEmSmallSuppliers.PNG){:width="100px"}
 
 __Customers__
-![Large Screen View of Customers](/src/pictures/StockEmLargeCustomers.PNG){:width=300px}
+![Large Screen View of Customers](/src/pictures/StockEmLargeCustomers.PNG){:width="300px"}
 
-![Small Screen View of Customers](/src/pictures/StockEmSmallCustomers.PNG){:width=100px}
+![Small Screen View of Customers](/src/pictures/StockEmSmallCustomers.PNG){:width="100px"}
 
 __Order History__
-![Large Screen View of Order History](/src/pictures/StockEmLargePastOrders.PNG){:width=300px}
+![Large Screen View of Order History](/src/pictures/StockEmLargePastOrders.PNG){:width="300px"}
 
-![Small Screen View of OrderHistory](/src/pictures/StockEmSmallPastOrders.PNG){:width=100px}
+![Small Screen View of OrderHistory](/src/pictures/StockEmSmallPastOrders.PNG){:width="100px"}
 
 __Add & Edit Customers__
-![Add and Edit Customers Page](/src/pictures/StockEmAddEditCustomerInfo.PNG){:width=300px}
+![Add and Edit Customers Page](/src/pictures/StockEmAddEditCustomerInfo.PNG){:width="300px"}
 
 __Add & Edit Suppliers__
-![Add and Edit Suppliers Page](/src/pictures/StockEmAddEditSupplierInfo.PNG){:width=300px}
+![Add and Edit Suppliers Page](/src/pictures/StockEmAddEditSupplierInfo.PNG){:width="300px"}
 
 __Add SKUs__
-![Add and Edit SKU Page](/src/pictures/StockEmAddSKUs.PNG){:width=300px}
+![Add and Edit SKU Page](/src/pictures/StockEmAddSKUs.PNG){:width="300px"}
 
 __Customer Order__
-![Create Customer PO](/src/pictures/StockEmCustomerPO.PNG){:width=300px}
+![Create Customer PO](/src/pictures/StockEmCustomerPO.PNG){:width="300px"}
 
 __Supplier Order__
-![Create Supplier PO](/src/pictures/StockEmSupplierPO.PNG){:width=300px}
+![Create Supplier PO](/src/pictures/StockEmSupplierPO.PNG){:width="300px"}
 
 ## Technology Used
 React, HTML, Javascript, CSS, NodeJs, PostgreSQL
