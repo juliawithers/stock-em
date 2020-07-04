@@ -2,6 +2,8 @@
 
 Link to live app: https://stock-em.vercel.app/
 
+Link to API Repo: https://github.com/juliawithers/stock-em-api
+
 ## Description
 Stock'Em! is an app specifically for tracking inventory coming into and out of a business. Add SKUs, Customers, and Suppliers. Edit your customer and supplier information as necessary. Submit Customer and Supplier PO's. Inventory will automatically be updated from these PO's. View all past orders, whether for a customer or a supplier.
 
