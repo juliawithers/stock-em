@@ -18,7 +18,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-table": "^7.3.3",
-    "reactable": "^1.1.0"
+    "reactable": "^1.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

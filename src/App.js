@@ -58,7 +58,6 @@ export default class App extends Component {
   }
 
   getAllInventory=()=>{
-   
     fetch(config.API_ENDPOINT+`/inventory/?user_id=${1}`, {
       method: 'GET',
       headers: {
@@ -642,7 +641,7 @@ export default class App extends Component {
       user_id: this.state.user_id,
 
     };
-
+    
     let menu = this.state.menu === 'hide'
       ? <div></div>
       : <div className="menu">
